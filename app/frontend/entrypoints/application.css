@@ -4,6 +4,7 @@
 @plugin "@tailwindcss/forms";
 
 @theme inline {
+	--animate-snow: snow linear infinite;
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
 	--font-sans: var(--font-family-sans);
@@ -89,6 +90,15 @@
 	}
 	html {
 		@apply font-sans;
-		scrollbar-gutter: stable;
+		/*scrollbar-gutter: stable;*/
+	}
+}
+
+@keyframes snow {
+	from {
+		transform: translate(0, 0);
+	}
+	to {
+		transform: translate(-30vw, 110vh);
 	}
 }

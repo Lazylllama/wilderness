@@ -3,7 +3,7 @@ import { Button } from "@/components/wilderness/button";
 
 export function Navbar() {
 	return (
-		<div className="bg-background flex flex-row justify-between py-5">
+		<div className="bg-background flex flex-row justify-between px-8 h-20 items-center">
 			<div className="flex flex-row items-center gap-10">
 				<div className="flex flex-row gap-1">
 					<h1 className="text-2xl">🌲</h1>

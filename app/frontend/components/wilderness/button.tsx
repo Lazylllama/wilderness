@@ -3,26 +3,29 @@ import { cva, type VariantProps } from "class-variance-authority";
 import type React from "react";
 import { cn } from "@/lib/utils";
 
-const buttonVariants = cva("rounded-xl text-xl", {
-	variants: {
-		variant: {
-			primary:
-				"bg-linear-to-b from-primary to-primary-bottom text-primary-foreground border-b-4 border-primary-shadow font-semibold",
-			secondary:
-				"bg-secondary text-secondary-foreground border-b-4 border-secondary-shadow font-semibold",
-			outline: "border font-medium text-foreground",
-			link: "text-foreground",
+const buttonVariants = cva(
+	"rounded-xl text-xl flex flex-row items-center cursor-pointer",
+	{
+		variants: {
+			variant: {
+				primary:
+					"bg-linear-to-b from-primary to-primary-bottom text-primary-foreground border-b-4 border-primary-shadow font-semibold hover:border-b-0 hover:translate-y-0.5 active:translate-y-0.5 transition-all",
+				secondary:
+					"bg-secondary text-secondary-foreground border-b-4 border-secondary-shadow font-semibold hover:border-b-0 hover:translate-y-0.5 active:translate-y-0.5 transition-all",
+				outline: "border font-medium text-foreground",
+				link: "text-foreground",
+			},
+			size: {
+				md: "py-2.5 px-3.5",
+				lg: "px-5 py-3.5",
+			},
 		},
-		size: {
-			md: "py-2.5 px-3.5",
-			lg: "px-5 py-3.5",
+		defaultVariants: {
+			variant: "primary",
+			size: "md",
 		},
 	},
-	defaultVariants: {
-		variant: "primary",
-		size: "md",
-	},
-});
+);
 
 function Button({
 	className,
