@@ -18,7 +18,7 @@ const MAX_HEIGHT = 180;
 
 export function Trees({ count = 60 }: { count?: number }) {
 	return (
-		<div className="absolute inset-x-0 bottom-24 -z-10 overflow-hidden pointer-events-none flex items-end">
+		<div className="absolute inset-x-0 bottom-0 -z-10 overflow-hidden pointer-events-none flex items-end">
 			{Array.from({ length: count }).map((_, index) => (
 				<img
 					key={`tree-${index}`}
