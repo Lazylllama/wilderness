@@ -60,3 +60,6 @@ end
 gem "inertia_rails", "~> 3.22"
 
 gem "vite_rails", "~> 3.11"
+
+gem "omniauth"
+gem "omniauth-hack_club"
