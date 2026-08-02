@@ -33,6 +33,9 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 group :development, :test do
+  # Use PostgreSQL as the database for Active Record in dev/test (production stays on sqlite3)
+  gem "pg", "~> 1.5"
+
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 

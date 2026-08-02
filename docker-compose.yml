@@ -1,0 +1,55 @@
+name: wilderness
+
+services:
+  rails-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/rails
+      - bundle:/usr/local/bundle
+      - node_modules:/rails/node_modules
+    ports:
+      - "3000:3000" # Rails
+      - "3036:3036" # Vite dev server / HMR
+    environment:
+      CAPYBARA_SERVER_PORT: "45678"
+      SELENIUM_HOST: "selenium"
+      DATABASE_HOST: "db"
+      DATABASE_USERNAME: "postgres"
+      DATABASE_PASSWORD: "postgres"
+    depends_on:
+      selenium:
+        condition: service_started
+      db:
+        condition: service_healthy
+    # Ensure deps are installed/up to date and the db is ready, then start
+    # the normal dev process (rails server + vite dev server via Procfile.dev)
+    command: bash -c "rm -f tmp/pids/server.pid && bundle check || bundle install && npm install && bin/rails db:prepare && bin/dev"
+    stdin_open: true
+    tty: true
+
+  selenium:
+    image: selenium/standalone-chromium
+    restart: unless-stopped
+
+  db:
+    image: postgres:17-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432" # host 5432 is often already taken; app talks to `db:5432` internally
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  bundle:
+  node_modules:
+  postgres_data:
