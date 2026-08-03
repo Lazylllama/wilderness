@@ -26,6 +26,7 @@ export function EmojiSnow({ count = 20 }: EmojiSnowProps) {
 						left: flake.left,
 						animationDelay: flake.animationDelay,
 						animationDuration: flake.animationDuration,
+						opacity: Math.random() * 0.3, // opacity between 0 and 0.3
 					}}
 				>
 					❄️

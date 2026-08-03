@@ -3,7 +3,7 @@ import { Button } from "@/components/wilderness/button";
 
 export function Navbar() {
 	return (
-		<div className="bg-background flex flex-row justify-between px-8 h-20 items-center">
+		<div className="bg-background flex flex-row justify-between py-5 items-center">
 			<div className="flex flex-row items-center gap-10">
 				<div className="flex flex-row gap-1">
 					<h1 className="text-2xl">🌲</h1>
@@ -33,7 +33,7 @@ function NavbarLink({ name, href }: { name: string; href: string }) {
 	return (
 		<a
 			href={href}
-			className="text-foreground hover:text-foreground/50 font-serif italic text-xl"
+			className="text-foreground/70 hover:text-foreground/50 font-serif italic text-xl transition-all"
 		>
 			{name}
 		</a>
