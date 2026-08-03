@@ -66,3 +66,4 @@ gem "vite_rails", "~> 3.11"
 
 gem "omniauth"
 gem "omniauth-hack_club"
+gem "omniauth-rails_csrf_protection"
