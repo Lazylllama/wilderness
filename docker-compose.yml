@@ -24,9 +24,7 @@ services:
         condition: service_started
       db:
         condition: service_healthy
-    # Ensure deps are installed/up to date and the db is ready, then start
-    # the normal dev process (rails server + vite dev server via Procfile.dev)
-    command: bash -c "rm -f tmp/pids/server.pid && bundle check || bundle install && npm install && bin/rails db:prepare && bin/dev"
+    command: bash
     stdin_open: true
     tty: true
 
