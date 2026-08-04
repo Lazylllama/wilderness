@@ -25,4 +25,9 @@ module Authentication
     @current_user = nil
   end
 
+  def require_authentication
+    return if signed_in?
+    redirect_to root_path, alert: "set up your tent first!"
+  end
+
 end
