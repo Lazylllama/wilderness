@@ -13,4 +13,4 @@ class SessionsController < ApplicationController
     def failure
     redirect_to root_path, alert: "couldn't light that match (#{params[:message]||"unknown"})"
   end
-  end
+end

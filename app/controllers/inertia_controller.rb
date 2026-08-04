@@ -6,8 +6,7 @@ class InertiaController < ApplicationController
       name: current_user.display_name,
       email: current_user.email,
       slack_id: current_user.slack_id,
-      verification_status: current_user.verification_status,
+      verification_status: current_user.verification_status
     }
-    
   }
 end

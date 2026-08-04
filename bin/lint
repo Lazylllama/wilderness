@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+echo "rubocop"
+bundle exec rubocop -A
+
+echo "biome chceck"
+npx @biomejs/biome check --write

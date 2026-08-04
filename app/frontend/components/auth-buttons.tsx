@@ -1,9 +1,7 @@
-import type React from "react";
-import { Button } from "@/components/wilderness/button";
-import { csrfToken } from "@/lib/csrf";
+// import type React from "react";
 
-type AuthButtonProps = {
-	children: React.ReactNode;
-	variant?: "primary" | "secondary" | "outline" | "link";
-	className?: string;
-};
+// type AuthButtonProps = {
+// 	children: React.ReactNode;
+// 	variant?: "primary" | "secondary" | "outline" | "link";
+// 	className?: string;
+// };
