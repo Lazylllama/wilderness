@@ -37,13 +37,13 @@
 	--color-pill-background: var(--pill-background);
 	--color-pill-border: var(--pill-border);
 	--color-pill-foreground: var(--pill-foreground);
-	--radius-sm: calc(var(--radius) * 0.6);
-	--radius-md: calc(var(--radius) * 0.8);
-	--radius-lg: var(--radius);
-	--radius-xl: calc(var(--radius) * 1.2);
-	--radius-2xl: calc(var(--radius) * 1.6);
-	--radius-3xl: calc(var(--radius) * 2);
-	--radius-4xl: calc(var(--radius) * 2.4);
+	--radius-sm: calc(var(--radius) * 0.8);
+	--radius-md: var(--radius);
+	--radius-lg: calc(var(--radius) * 1.2);
+	--radius-xl: calc(var(--radius) * 1.6);
+	--radius-2xl: calc(var(--radius) * 2);
+	--radius-3xl: calc(var(--radius) * 2.4);
+	--radius-4xl: calc(var(--radius) * 2.8);
 }
 
 :root {
@@ -91,6 +91,9 @@
 	html {
 		@apply font-sans;
 		/*scrollbar-gutter: stable;*/
+	}
+	p {
+		@apply font-serif;
 	}
 }
 

@@ -3,16 +3,20 @@ import { cva, type VariantProps } from "class-variance-authority";
 import type React from "react";
 import { cn } from "@/lib/utils";
 
-const inputVariants = cva("", {
-	variants: {
-		variant: {
-			primary: "",
+const inputVariants = cva(
+	"h-12 w-xs border rounded-lg text-xl any-pointer-coarse:text-base",
+	{
+		variants: {
+			variant: {
+				primary:
+					"bg-card border-border placeholder:text-foreground/50 text-foreground placeholder:text-md",
+			},
+		},
+		defaultVariants: {
+			variant: "primary",
 		},
 	},
-	defaultVariants: {
-		variant: "primary",
-	},
-});
+);
 
 function Input({
 	className,
@@ -22,11 +26,7 @@ function Input({
 	return (
 		<BaseUIInput
 			data-variant={variant}
-			className={cn(
-				"bg-card border-border placeholder:text-foreground/50 text-foreground placeholder:text-md",
-				"h-12 w-xs border rounded-xl text-xl any-pointer-coarse:text-base",
-			)}
-			//className={cn(inputVariants({ variant, className }))}
+			className={cn(inputVariants({ variant, className }))}
 			{...props}
 		/>
 	);
