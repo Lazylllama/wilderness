@@ -1,7 +1,13 @@
-# frozen_string_literal: true
-
 class InertiaController < ApplicationController
-  # Share data with all Inertia responses
-  # see https://inertia-rails.dev/guide/shared-data
-  #   inertia_share user: -> { Current.user&.as_json(only: [:id, :name, :email]) }
+  inertia_share user: -> {
+    next nil unless current_user
+    {
+      id: current_user.id,
+      name: current_user.display_name,
+      email: current_user.email,
+      slack_id: current_user.slack_id,
+      verification_status: current_user.verification_status,
+    }
+    
+  }
 end

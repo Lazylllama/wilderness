@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+    env_file: .env
     volumes:
       - .:/rails
       - bundle:/usr/local/bundle

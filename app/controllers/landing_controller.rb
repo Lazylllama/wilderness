@@ -1,4 +1,4 @@
-class LandingController < ApplicationController
+class LandingController < InertiaController
   def index
     render inertia: {
       release_flipper: Flipper.enabled?(:release)
