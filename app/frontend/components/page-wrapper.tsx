@@ -1,3 +1,3 @@
 export function PageWrapper({ children }: { children: React.ReactNode }) {
-	return <div className="max-w-7xl mx-auto">{children}</div>;
+	return <div className="max-w-7xl px-8 mx-auto">{children}</div>;
 }
