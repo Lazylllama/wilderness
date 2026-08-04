@@ -66,3 +66,6 @@ gem "vite_rails", "~> 3.11"
 
 gem "omniauth"
 gem "omniauth-hack_club"
+gem "flipper-active_record", "~> 1.4"
+
+gem "flipper-ui", "~> 1.4"

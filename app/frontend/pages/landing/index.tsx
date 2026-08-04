@@ -1,5 +1,5 @@
-import { FlameKindling, Milk, MoveUpRight } from "lucide-react";
-import { EmojiSnow } from "@/components/emoji-snow";
+import { FlameKindling, MoveUpRight } from "lucide-react";
+import { EmojiSnow } from "@/components/landing/emoji-snow";
 import { Navbar } from "@/components/navbar";
 import { PageWrapper } from "@/components/page-wrapper";
 import { Trees } from "@/components/trees";
@@ -8,9 +8,18 @@ import { Card, CardContent } from "@/components/wilderness/card";
 import { Input } from "@/components/wilderness/input";
 import { Label } from "@/components/wilderness/label";
 
-export default function LandingPage() {
+export default function LandingPage({
+	release_flipper = false,
+}: {
+	release_flipper: boolean;
+}) {
 	return (
 		<>
+			{release_flipper && (
+				<div className="w-screen flex flex-row items-center justify-center text-center p-2 bg-destructive-background text-destructive-foreground">
+					THIS IS THE RELEASE VERSION.
+				</div>
+			)}
 			<PageWrapper>
 				<Navbar />
 			</PageWrapper>
@@ -38,7 +47,8 @@ export default function LandingPage() {
 								<Input id="email" placeholder={"mrrp@lazyllama.xyz"} />
 
 								<Button variant={"secondary"} className="h-fit">
-									RSVP <FlameKindling size={20} strokeWidth={3} />
+									{release_flipper ? "lets go" : "RSVP"}{" "}
+									<FlameKindling size={20} strokeWidth={3} />
 								</Button>
 							</div>
 						</Label>

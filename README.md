@@ -1,24 +1,11 @@
-# README
+# wilderness
+wait.. what is this?
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# dev
+- We use docker, if you dont want to use docker then you have to figure it out yourself. pretty much just run `docker compose run --rm --service-ports rails-app bin/setup` and everything should just work, you can then run `bin/setup` to setup everything else for you and start the app
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Edit credential files using `EDITOR="vim" rails credentials:edit --environment=development`, you will most likely need to remove the old one and create a new one unless you have the development.key file. This is the format of the credentials file:
+    ```yaml
+    for_example:
+        nothing: true
+    ```
