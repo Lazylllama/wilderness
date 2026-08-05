@@ -2,7 +2,7 @@ require "net/http"
 
 module Hackatime
     class Client
-        BASE_URL = "https://hackatime.hackclub.com/api/v1"
+        BASE_URL = "https://hackatime.hackclub.com/api/v1".freeze
         USER_AGENT = "wilderness (hackclub)".freeze
         TIMEOUT = 10
 
