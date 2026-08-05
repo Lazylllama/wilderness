@@ -1,6 +1,6 @@
 module Authentication
   extend ActiveSupport::Concern
-  include do
+  included do
     helper_method :current_user, :signed_in?
   end
 
@@ -10,7 +10,7 @@ module Authentication
     @current_user = session[:user_id] && User.find_by(id: session[:user_id])
   end
 
-    def signed_in?
+  def signed_in?
     current_user.present?
   end
 
