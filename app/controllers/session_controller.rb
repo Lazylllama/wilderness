@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class SessionController < ApplicationController
     def create
         user = User.from_omniauth(request.env["omniauth.auth"])
         sign_in(user)
@@ -11,6 +11,6 @@ class SessionsController < ApplicationController
     end
 
     def failure
-    redirect_to root_path, alert: "couldn't light that match (#{params[:message]||"unknown"})"
-  end
+        redirect_to root_path, alert: "couldn't light that match (#{params[:message]||"unknown"})"
+    end
 end

@@ -20,6 +20,9 @@
 			"preset": "recommended",
 			"a11y": {
 				"noSvgWithoutTitle": "off"
+			},
+			"suspicious": {
+				"noArrayIndexKey": "off"
 			}
 		}
 	},

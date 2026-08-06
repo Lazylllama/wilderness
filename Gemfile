@@ -70,3 +70,7 @@ gem "omniauth-rails_csrf_protection"
 
 gem "flipper-active_record", "~> 1.4"
 gem "flipper-ui", "~> 1.4"
+
+gem "sorbet", group: :development
+gem "sorbet-runtime"
+gem "tapioca", require: false, group: [ :development, :test ]

@@ -9,5 +9,5 @@ class DashboardController < InertiaController
         tents: []
       }
     }
-end
+  end
 end

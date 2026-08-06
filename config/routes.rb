@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index"
   get "inertia-example", to: "inertia_example#index"
 
-  resources :tents, except: [:show, :destroy] do
-    post :sync,on: :collection
+  resources :tents, except: [ :show, :destroy ] do
+    post :sync, on: :collection
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

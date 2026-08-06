@@ -2,18 +2,34 @@ import { MoveUpRight } from "lucide-react";
 import { Button } from "@/components/wilderness/button";
 
 export function Navbar() {
+	function ScrollToSection(id: string) {
+		const section = document.getElementById(id);
+		if (section) {
+			section.scrollIntoView({ behavior: "smooth" });
+		}
+	}
+
 	return (
-		<div className="bg-background flex flex-row justify-between py-5 items-center">
+		<div className="max-w-7xl px-8 mx-auto 	bg-background flex flex-row justify-between py-5 items-center">
 			<div className="flex flex-row items-center gap-10">
 				<div className="flex flex-row gap-1">
 					<h1 className="text-2xl">🌲</h1>
 					<h1 className="text-2xl text-white font-semibold">wilderness</h1>
 				</div>
 				<div className="flex flex-row items-center gap-8">
-					<NavbarLink name="how it works" href="#" />
-					<NavbarLink name="the tiers" href="#" />
-					<NavbarLink name="shop" href="" />
-					<NavbarLink name="faq" href="" />
+					<NavbarButton
+						name="how it works"
+						onClick={() => ScrollToSection("step-by-step")}
+					/>
+					<NavbarButton
+						name="the tiers"
+						onClick={() => ScrollToSection("project-heat-tiers")}
+					/>
+					<NavbarButton
+						name="shop"
+						onClick={() => ScrollToSection("shop-preview")}
+					/>
+					<NavbarLink name="faq" href="/faq" />
 				</div>
 			</div>
 			<div className="flex flex-row gap-2 items-center">
@@ -37,5 +53,23 @@ function NavbarLink({ name, href }: { name: string; href: string }) {
 		>
 			{name}
 		</a>
+	);
+}
+
+function NavbarButton({
+	name,
+	onClick,
+}: {
+	name: string;
+	onClick: () => void;
+}) {
+	return (
+		<button
+			type="button"
+			onClick={onClick}
+			className="text-foreground/70 hover:text-foreground/50 font-serif italic text-xl transition-all cursor-pointer"
+		>
+			{name}
+		</button>
 	);
 }
