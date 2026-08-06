@@ -170,7 +170,7 @@ export function ShopPreview({
 	averageHourRate,
 }: {
 	items: Array<itemType>;
-	averageHourRate: number;
+	hourRate: number;
 }) {
 	console.log("items", items);
 	return (
@@ -188,10 +188,10 @@ export function ShopPreview({
 
 function ShopPreviewCard({
 	item,
-	hourRate,
+	averageHourRate,
 }: {
 	item: itemType;
-	hourRate: number;
+	averageHourRate: number;
 }) {
 	return (
 		<Card className="w-48 aspect-square bg-background text-center text-foreground/30">
