@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_04_201059) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_06_215242) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -28,5 +28,26 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_04_201059) do
     t.datetime "updated_at", null: false
     t.text "value"
     t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
+  end
+
+  create_table "shop_items", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "image_url"
+    t.integer "price"
+    t.string "title"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email", null: false
+    t.string "first_name"
+    t.string "hc_uid", null: false
+    t.string "last_name"
+    t.string "name"
+    t.string "slack_id"
+    t.datetime "updated_at", null: false
+    t.string "verification_status"
+    t.index ["hc_uid"], name: "index_users_on_hc_uid", unique: true
   end
 end

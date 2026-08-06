@@ -17,10 +17,7 @@ export function Trees({ count = 30 }: { count?: number }) {
 		<div className="absolute inset-x-0 bottom-0 -z-10 overflow-hidden pointer-events-none flex items-end bg-linear-to-t from-background to-transparent">
 			{Array.from({ length: count }).map((_, index) => (
 				<img
-					key={`tree-${
-						// biome-ignore lint/suspicious/noArrayIndexKey: no
-						index
-					}`}
+					key={`tree-${index}`}
 					src={treeUrls[index % treeUrls.length]}
 					alt=""
 					style={{

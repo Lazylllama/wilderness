@@ -10,6 +10,7 @@
 	--font-sans: var(--font-family-sans);
 	--font-heading: var(--font-family-sans);
 	--font-serif: var(--font-family-serif);
+	--font-pixel: var(--font-family-pixel);
 	--color-card: var(--card);
 	--color-card-foreground: var(--card-foreground);
 	--color-primary: var(--primary);
@@ -79,6 +80,7 @@
 	--radius: 0.625rem; /* 0.625rem = 10px */
 	--font-family-sans: "Fredoka", sans-serif;
 	--font-family-serif: "Lora", serif;
+	--font-family-pixel: "Pixelify Sans", sans-serif;
 }
 
 @layer base {
@@ -90,6 +92,7 @@
 	}
 	html {
 		@apply font-sans;
+		scroll-behavior: smooth;
 		/*scrollbar-gutter: stable;*/
 	}
 	p {

@@ -1,7 +1,16 @@
 import { FlameKindling, MoveUpRight } from "lucide-react";
+import {
+	HeatTierCards,
+	ShopPreview,
+	StepCards,
+} from "@/components/landing/cards";
 import { EmojiSnow } from "@/components/landing/emoji-snow";
+import {
+	SectionContent,
+	SectionHeading,
+	SectionWrapper,
+} from "@/components/landing/sections";
 import { Navbar } from "@/components/navbar";
-import { PageWrapper } from "@/components/page-wrapper";
 import { Trees } from "@/components/trees";
 import { Button } from "@/components/wilderness/button";
 import { Card, CardContent } from "@/components/wilderness/card";
@@ -10,8 +19,19 @@ import { Label } from "@/components/wilderness/label";
 
 export default function LandingPage({
 	release_flipper = false,
+	hour_multipliers,
+	base_hour_rate,
+	items,
 }: {
 	release_flipper: boolean;
+	hour_multipliers: Record<string, number>;
+	base_hour_rate: number;
+	items: Array<{
+		id: number;
+		title: string;
+		price: number;
+		image_url: string;
+	}>;
 }) {
 	return (
 		<>
@@ -20,9 +40,7 @@ export default function LandingPage({
 					THIS IS THE RELEASE VERSION.
 				</div>
 			)}
-			<PageWrapper>
-				<Navbar />
-			</PageWrapper>
+			<Navbar />
 			<div className="relative isolate w-full h-[750px] bg-linear-to-b from-night-blue to-card">
 				<EmojiSnow />
 				<div className="grid grid-cols-2 max-w-7xl h-full mx-auto">
@@ -57,7 +75,7 @@ export default function LandingPage({
 				</div>
 				<Trees />
 			</div>
-			<PageWrapper>
+			<SectionWrapper>
 				<Card>
 					<CardContent className="flex flex-row gap-4 items-center justify-between">
 						<div className="flex items-center justify-center h-18 aspect-square border rounded-xl">
@@ -72,15 +90,48 @@ export default function LandingPage({
 								<span className="font-bold">LOVE</span> games, that doesn’t mean
 								we accept anything else, we welcome any and all software
 								projects and nothing gets different, the same shop, same
-								experience and the same fires. Don’t know where to start?
+								experience and the same fires.
 							</p>
 						</div>
 						<Button variant="secondary">
-							checkout guides <MoveUpRight size={20} strokeWidth={3} />
+							guides <MoveUpRight size={20} strokeWidth={3} />
 						</Button>
 					</CardContent>
 				</Card>
-			</PageWrapper>
+			</SectionWrapper>
+			<SectionWrapper>
+				<SectionHeading
+					id="step-by-step"
+					title="step by step"
+					subtitle="so lets go through how this works in 4 simple steps"
+				/>
+				<SectionContent className="grid grid-cols-4 gap-4">
+					<StepCards />
+				</SectionContent>
+			</SectionWrapper>
+			<SectionWrapper>
+				<SectionHeading
+					id="project-heat-tiers"
+					title="project heat tiers"
+					subtitle="the cooler the project, the better the payout"
+				/>
+				<SectionContent className="grid grid-cols-4 gap-4">
+					<HeatTierCards
+						baseHourRate={base_hour_rate}
+						hourMultipliers={hour_multipliers}
+					/>
+				</SectionContent>
+			</SectionWrapper>
+			<SectionWrapper>
+				<SectionHeading
+					id="shop-preview"
+					title="take a peek at whats ahead"
+					subtitle="crazy that you can just code and get stuff, amaze amaze"
+				/>
+				<SectionContent>
+					<ShopPreview items={items} averageHourRate={67} />
+				</SectionContent>
+			</SectionWrapper>
 		</>
 	);
 }

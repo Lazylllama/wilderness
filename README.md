@@ -9,3 +9,6 @@ wait.. what is this?
     for_example:
         nothing: true
     ```
+
+# contributing
+- use `bin/lint` to lint

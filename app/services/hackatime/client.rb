@@ -7,11 +7,11 @@ module Hackatime
         TIMEOUT = 10
 
         def initialize(identifier)
-            raise ArgumentError,"identifier required" if identifier.blank?
+            raise ArgumentError, "identifier required" if identifier.blank?
             @identifier = identifier.to_s
         end
 
-        def projects(since:Rails.configuration.x.wilderness.program_start)
+        def projects(since: Rails.configuration.x.wilderness.program_start)
             get("users/#{CGI.escape(@identifier)}/projects/details",
           start_date: since&.to_date&.iso8601).fetch("projects", [])
         end
@@ -26,7 +26,7 @@ module Hackatime
             uri = URI("#{BASE_URL}/#{path}")
             query = params.compact
             uri.query = URI.encode_www_form(query) if query.any?
-            response = Net::HTTP.start(uri.host, uri.port, use_ssl: true,pen_timeout: TIMEOUT, read_timeout: TIMEOUT) do|http| http.get(uri.request_uri,"User-Agent"=> USER_AGENT)
+            response = Net::HTTP.start(uri.host, uri.port, use_ssl: true, pen_timeout: TIMEOUT, read_timeout: TIMEOUT) do |http| http.get(uri.request_uri, "User-Agent"=> USER_AGENT)
             end
 
             case response
