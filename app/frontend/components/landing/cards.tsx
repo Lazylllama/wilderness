@@ -170,7 +170,7 @@ export function ShopPreview({
 	averageHourRate,
 }: {
 	items: Array<itemType>;
-	hourRate: number;
+	averageHourRate: number;
 }) {
 	console.log("items", items);
 	return (
