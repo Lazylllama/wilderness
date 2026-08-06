@@ -15,4 +15,9 @@ class User < ApplicationRecord
     def display_name
     name.presence || first_name.presence|| email.split("@").first
   end
+  has_many :tents, dependent: :destroy
+
+  def hackatime_identifier
+    slack_id.presence||hc_uid
+  end
 end
