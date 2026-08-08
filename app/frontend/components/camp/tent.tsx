@@ -2,6 +2,7 @@ import {firelight,formatHours,HEAT_TIERS,jitter,plotFor,} from "@/lib/camp-layou
 import {cn} from "@/lib/utils";
 import type {Tent} from "@/types/camp";
 import {CampObject} from "./stage";
+import {TentArt} from "./art";
 
 export function CampTent({
     tent, onOpen,
@@ -20,7 +21,8 @@ export function CampTent({
 					"group flex w-[clamp(6.5rem,11vw,10rem)] cursor-pointer flex-col items-center",
 					"transition-transform duration-200 hover:-translate-y-1.5 focus-visible:-translate-y-1.5",
 					"outline-none",
-				)}><TentArt
+				)}>
+                    <TentArt
 					flag={tier.flag}
 					className={cn(
 						"w-full drop-shadow-[0_6px_10px_rgba(0,0,0,0.45)] transition-all",

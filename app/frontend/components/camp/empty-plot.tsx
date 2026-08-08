@@ -1,5 +1,6 @@
-import {plotFor } from "@/lib/camp-layout";
-
+import {plotFor} from "@/lib/camp-layout";
+import {PlotArt} from "./art";
+import {CampObject} from "./stage";
 export function EmptyPlot({
     plotIndex,onPitch,
 }: {

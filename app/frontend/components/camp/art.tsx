@@ -107,3 +107,46 @@ export function PlotArt({ className }: ArtProps) {
 		</svg>
 	);
 }
+
+export function CartArt({ className }: ArtProps) {
+	return (
+		<svg viewBox="0 0 140 120" className={className} aria-hidden="true">
+			<ellipse cx="70" cy="110" rx="48" ry="9" fill="#0d1409" opacity="0.45" />
+			<path d="M16 24 H124 L130 48 H10 Z" fill="#e8813c" />
+			<path d="M40 24 H63 L59 48 H35 Z" fill="#f3ecd8" />
+			<path d="M86 24 H109 L107 48 H82 Z" fill="#f3ecd8" />
+			<rect x="20" y="48" width="100" height="46" rx="6" fill="#8a6134" />
+			<rect x="20" y="62" width="100" height="7" fill="#6f4c28" />
+			<rect x="20" y="79" width="100" height="7" fill="#6f4c28" />
+			<circle
+				cx="44"
+				cy="98"
+				r="12"
+				fill="#3c3020"
+				stroke="#8bab6b"
+				strokeWidth="4"
+			/>
+			<circle
+				cx="98"
+				cy="98"
+				r="12"
+				fill="#3c3020"
+				stroke="#8bab6b"
+				strokeWidth="4"
+			/>
+		</svg>
+	);
+}
+
+export function RangerPostArt({ className }: ArtProps) {
+	return (
+		<svg viewBox="0 0 100 140" className={className} aria-hidden="true">
+			<ellipse cx="50" cy="132" rx="26" ry="7" fill="#0d1409" opacity="0.45" />
+			<rect x="44" y="46" width="11" height="86" rx="3" fill="#6f4c28" />
+			<rect x="10" y="10" width="80" height="14" rx="4" fill="#5b3f26" />
+			<rect x="18" y="24" width="64" height="52" rx="8" fill="#8a6134" />
+			<rect x="27" y="33" width="46" height="34" rx="5" fill="#f0cf7a" />
+			<circle cx="50" cy="50" r="11" fill="#fdf3cd" />
+		</svg>
+	);
+}
