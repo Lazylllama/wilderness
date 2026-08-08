@@ -86,3 +86,24 @@ export function CampfireArt({ className }: ArtProps) {
 	);
 }
 
+export function PlotArt({ className }: ArtProps) {
+	return (
+		<svg viewBox="0 0 140 140" className={className} aria-hidden="true">
+			<ellipse cx="70" cy="124" rx="46" ry="10" fill="#0d1409" opacity="0.25" />
+			<path
+				d="M70 30 L118 122 H22 Z"
+				fill="none"
+				stroke="currentColor"
+				strokeWidth="3"
+				strokeDasharray="9 9"
+				strokeLinejoin="round"
+			/>
+			<path
+				d="M70 62 v30 M55 77 h30"
+				stroke="currentColor"
+				strokeWidth="4"
+				strokeLinecap="round"
+			/>
+		</svg>
+	);
+}

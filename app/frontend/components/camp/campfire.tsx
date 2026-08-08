@@ -20,7 +20,7 @@ export function Campfire({
 					className="w-[clamp(4rem,7vw,6.7rem)] origin-bottom transition-transform duration-500 group-hover:scale-105"
 					style={{transform: `scale(${state.flame})`}}
 				/>
-                <span className="mt-2 whitespace-nowrap font-serif text-sm text-foreground]">
+                <span className="mt-2 whitespace-nowrap font-serif text-sm text-foreground]/70 drop-shadow-[0_2px_3px_rgba(0,0,0,0.867)">
 					the fire is{" "}
 					<span className="font-bold text-primary">{state.label}</span> ·{" "}
 					{formatHours(camp.total_hours)} burned
