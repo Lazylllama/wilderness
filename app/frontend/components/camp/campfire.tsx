@@ -25,6 +25,9 @@ export function Campfire({
 					<span className="font-bold text-primary">{state.label}</span> ·{" "}
 					{formatHours(camp.total_hours)} burned
 				</span>
+                <span className="text-xs text-foreground/0 transition-colors group-hover:text-foreground/50 group-focus-visible:text-foreground/50">
+					stories around the fire →
+				</span>
             </button>
         </CampObject>
     )
