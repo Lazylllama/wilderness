@@ -1,5 +1,6 @@
 import { MoveUpRight } from "lucide-react";
 import { Button } from "@/components/wilderness/button";
+import { WildernessLogo } from "./logo";
 
 export function Navbar() {
 	function ScrollToSection(id: string) {
@@ -12,10 +13,7 @@ export function Navbar() {
 	return (
 		<div className="max-w-7xl px-8 mx-auto 	bg-background flex flex-row justify-between py-5 items-center">
 			<div className="flex flex-row items-center gap-10">
-				<div className="flex flex-row gap-1">
-					<h1 className="text-2xl">🌲</h1>
-					<h1 className="text-2xl text-white font-semibold">wilderness</h1>
-				</div>
+				<WildernessLogo />
 				<div className="flex flex-row items-center gap-8">
 					<NavbarButton
 						name="how it works"

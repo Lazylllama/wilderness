@@ -142,7 +142,7 @@ function HeatTierCard({
 				<p className="font-pixel tracking-widest">
 					{variant?.toLocaleUpperCase()}
 				</p>
-				<p className="font-sans text-[13px]">
+				<p className="font-sans text-card-foreground text-[13px]">
 					<span className="font-semibold text-[24px]">
 						{hourRate?.toFixed(0)}
 					</span>{" "}
@@ -194,18 +194,21 @@ function ShopPreviewCard({
 	averageHourRate: number;
 }) {
 	return (
-		<Card className="w-48 aspect-square bg-background text-center text-foreground/30">
-			<CardHeader className="h-67.5">
+		<Card className="w-full aspect-square bg-background text-center text-foreground/30">
+			<CardHeader className="flex flex-col items-center justify-center">
 				<img
 					src={item.image_url}
 					alt={item.title}
-					className="w-full h-32 object-cover"
+					className="h-54 object-cover p-4"
 				/>
 			</CardHeader>
-			<CardContent className="flex flex-col gap-2">
-				<p className="font-semibold">{item.title}</p>
-				<p className="text-[13px] text-foreground/70">
-					{item.price} logs ({(item.price / averageHourRate).toFixed(1)} hours)
+			<CardContent className="flex flex-col gap-1 text-left border-t bg-card rounded-b-xl px-3.5 py-2">
+				<h1 className="font-bold text-foreground text-[24px]">{item.title}</h1>
+				<p className="font-heading font-bold text-primary text-[20px]">
+					🪵 {item.price}{" "}
+					<span className="text-[14px] font-normal text-foreground/50">
+						(~{(item.price / averageHourRate).toFixed(1)}hrs)
+					</span>
 				</p>
 			</CardContent>
 		</Card>

@@ -118,6 +118,9 @@ module GeneratedPathHelpersModule
   def root_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def rsvp_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def sync_tents_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

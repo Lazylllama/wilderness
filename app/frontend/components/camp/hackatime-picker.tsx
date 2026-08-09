@@ -1,7 +1,7 @@
 import {Check, RefreshCw} from "lucide-react";
 import {formatHours, relativeTime} from "@/lib/camp-layout";
-import type {HackatimeProject} from "@/types/camp";
 import {cn} from "@/lib/utils";
+import type {HackatimeProject} from "@/types/camp";
 
 export function HackatimePicker({
     projects, selected, onToggle, onSync, syncing,
@@ -18,9 +18,7 @@ export function HackatimePicker({
             <RefreshCw size={12} className={syncing? "animate-spin":""}/>
             {syncing? "syncing…":"resync"}
         </button>
-    </div>
-
-    {projects.length === 0?(
+    </div>projects.length === 0?(
         <p>no hackatime projects yet. link your hackatime from the ranger post, and hit resync. if not yet, you can <a href="https://hackatime.hackclub.com/setup">setup hackatime</a></p>
     ): (
         <div>
@@ -48,6 +46,5 @@ export function HackatimePicker({
                 )
             })}
         </div>
-    )}
-    <p>hours from every linked project add up into this tent&rsquo;s total.</p>
+    )
 }

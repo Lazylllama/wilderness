@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index"
   get "inertia-example", to: "inertia_example#index"
 
+  post "rsvp", to: "rsvp#create"
+
   resources :tents, except: [ :show, :destroy ] do
     post :sync, on: :collection
   end

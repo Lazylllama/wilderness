@@ -118,6 +118,9 @@ module GeneratedUrlHelpersModule
   def root_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def rsvp_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def sync_tents_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

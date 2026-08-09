@@ -1,7 +1,17 @@
 import { cn } from "@/lib/utils";
 
-export function SectionWrapper({ children }: { children?: React.ReactNode }) {
-	return <div className="max-w-7xl px-8 mx-auto pt-3.5">{children}</div>;
+export function SectionWrapper({
+	children,
+	className,
+}: {
+	children?: React.ReactNode;
+	className?: string;
+}) {
+	return (
+		<div className={cn("max-w-7xl px-8 mx-auto pt-4", className)}>
+			{children}
+		</div>
+	);
 }
 
 export function SectionContent({
