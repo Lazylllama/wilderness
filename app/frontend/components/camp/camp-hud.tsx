@@ -2,6 +2,7 @@ import {Link} from "@inertiajs/react";
 import {formatLogs} from "@/lib/camp-layout";
 import {cn} from "@/lib/utils";
 import type {Camp} from "@/types/camp";
+import {Flame, Moon, Sun, TreePine} from "lucide-react";
 
 function pill({
     children,className,
@@ -21,6 +22,8 @@ export function CampHud({
 }: {
     camp: Camp;
     night: boolean;
+    onToggleNight: ()=> void;
+	userName: string;
 }) {
     return (
         <div>
@@ -33,9 +36,21 @@ export function CampHud({
 
             <div>
                 <button type="button" onClick={onToggleNight}>
-
+                    <Pill>
+                        {night? <Moon size={16} />:<Sun size={16}/>}
+                        {night? "night":"day"}
+                    </Pill>
                 </button>
+                <Pill>
+                    <Flame size={16} className="text-primary"/>
+                    {camp.streak} day streak
+                </Pill>
+                <Pill>🪵 {formatLogs(camp.logs_balance)}</Pill> {/* not AI emoji lol, temp*/}
+                <Link href="/shop" className="pointer-events-auto">
+					<Pill className="transition-colors hover:border-primary/67">shop</Pill>
+				</Link>
+
             </div>
         </div>
-    )
+    );
 }
