@@ -16,4 +16,8 @@ class LandingController < InertiaController
       end
     }
   end
+
+  def test
+    render inertia: {}
+  end
 end

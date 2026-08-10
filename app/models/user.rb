@@ -1,24 +1,25 @@
 class User < ApplicationRecord
-    def self.from_omniauth(auth)
-      user = find_or_initialize_by(hc_uid: auth.uid)
+  validates :email, presence: true, uniqueness: true
+  def self.from_omniauth(auth)
+    user = find_or_initialize_by(hc_uid: auth.uid)
 
-      user.email = auth.info.email
-      user.name = auth.info.name
-      user.first_name = auth.info.first_name
-      user.last_name = auth.info.last_name
-      user.slack_id = auth.info.slack_id
-      user.verification_status = auth.info.verification_status.to_s
-      user.save!
-      user
-    end
+    user.email = auth.info.email
+    user.name = auth.info.name
+    user.first_name = auth.info.first_name
+    user.last_name = auth.info.last_name
+    user.slack_id = auth.info.slack_id
+    user.verification_status = auth.info.verification_status.to_s
+    user.save!
+    user
+  end
 
-    def display_name
-      name.presence || first_name.presence|| email.split("@").first
-    end
+  def display_name
+    name.presence || first_name.presence|| email.split("@").first
+  end
 
-    has_many :tents, dependent: :destroy
+  has_many :tents, dependent: :destroy
 
-    def hackatime_identifier
-      slack_id.presence||hc_uid
-    end
+  def hackatime_identifier
+    slack_id.presence||hc_uid
+  end
 end

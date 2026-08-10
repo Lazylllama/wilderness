@@ -118,6 +118,9 @@ module GeneratedPathHelpersModule
   def root_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def rsvp_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def sync_tents_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -125,6 +128,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def tents_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def test_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def update_rails_disk_service_path(*args); end

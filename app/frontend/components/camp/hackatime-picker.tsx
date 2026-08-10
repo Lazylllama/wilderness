@@ -1,7 +1,7 @@
 import {Check, RefreshCw} from "lucide-react";
 import {formatHours, relativeTime} from "@/lib/camp-layout";
-import type {HackatimeProject} from "@/types/camp";
 import {cn} from "@/lib/utils";
+import type {HackatimeProject} from "@/types/camp";
 
 export function HackatimePicker({
     projects, selected, onToggle, onSync, syncing,

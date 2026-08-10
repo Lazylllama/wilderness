@@ -3,13 +3,19 @@ Rails.application.routes.draw do
   constraints(host: "127.0.0.1") do
     get "(*path)", to: redirect { |params, req| "#{req.protocol}localhost:#{req.port}/#{params[:path]}" }
   end
+
   root "landing#index"
+
+  get "test", to: "landing#test" if Rails.env.development?
+
   get "auth/:provider/callback", to: "sessions#create"
   get "auth/failure", to: "sessions#failure"
   delete "logout", to: "sessions#destroy"
 
   get "dashboard", to: "dashboard#index"
   get "inertia-example", to: "inertia_example#index"
+
+  post "rsvp", to: "rsvp#create"
 
   resources :tents, except: [ :show, :destroy ] do
     post :sync, on: :collection

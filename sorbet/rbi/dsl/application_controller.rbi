@@ -19,6 +19,7 @@ class ApplicationController
     include ::ViteRails::TagHelpers
     include ::ActionController::Base::HelperMethods
     include ::ApplicationHelper
+    include ::RsvpHelper
 
     sig { returns(T.untyped) }
     def current_user; end

@@ -118,6 +118,9 @@ module GeneratedUrlHelpersModule
   def root_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def rsvp_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def sync_tents_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -125,6 +128,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def tents_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def test_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def update_rails_disk_service_url(*args); end

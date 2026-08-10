@@ -1,3 +1,4 @@
+import { Form } from "@inertiajs/react";
 import { FlameKindling, MoveUpRight } from "lucide-react";
 import {
 	HeatTierCards,
@@ -5,6 +6,7 @@ import {
 	StepCards,
 } from "@/components/landing/cards";
 import { EmojiSnow } from "@/components/landing/emoji-snow";
+import { Footer } from "@/components/landing/footer";
 import {
 	SectionContent,
 	SectionHeading,
@@ -34,7 +36,7 @@ export default function LandingPage({
 	}>;
 }) {
 	return (
-		<>
+		<div className="bg-linear-to-b from-background from-67% to-destructive-background">
 			{release_flipper && (
 				<div className="w-screen flex flex-row items-center justify-center text-center p-2 bg-destructive-background text-destructive-foreground">
 					THIS IS THE RELEASE VERSION.
@@ -59,23 +61,30 @@ export default function LandingPage({
 							<span className="text-primary/70">logs</span>, spend them on
 							straight peak in the shop.
 						</p>
-						<Label htmlFor="email" className="">
-							your email
-							<div className="flex flex-row gap-2 h-fit">
-								<Input id="email" placeholder={"mrrp@lazyllama.xyz"} />
+						<Form action="/rsvp" method="post">
+							<Label htmlFor="email" className="">
+								your email
+								<div className="flex flex-row gap-2 h-fit">
+									<Input
+										type="email"
+										id="email"
+										name="email"
+										placeholder={"mrrp@lazyllama.xyz"}
+									/>
 
-								<Button variant={"secondary"} className="h-fit">
-									{release_flipper ? "lets go" : "RSVP"}{" "}
-									<FlameKindling size={20} strokeWidth={3} />
-								</Button>
-							</div>
-						</Label>
+									<Button type="submit" variant={"secondary"} className="h-fit">
+										{release_flipper ? "lets go" : "RSVP"}{" "}
+										<FlameKindling size={20} strokeWidth={3} />
+									</Button>
+								</div>
+							</Label>
+						</Form>
 					</div>
 					<div className="col-span-1">{/* image go here */}</div>
 				</div>
 				<Trees />
 			</div>
-			<SectionWrapper>
+			<SectionWrapper className="py-7">
 				<Card>
 					<CardContent className="flex flex-row gap-4 items-center justify-between">
 						<div className="flex items-center justify-center h-18 aspect-square border rounded-xl">
@@ -132,6 +141,7 @@ export default function LandingPage({
 					<ShopPreview items={items} averageHourRate={67} />
 				</SectionContent>
 			</SectionWrapper>
-		</>
+			<Footer />
+		</div>
 	);
 }
