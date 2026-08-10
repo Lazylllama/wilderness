@@ -60,5 +60,53 @@ function TentPanelBody({
     .reduce((sum, p)=> sum + p.total_seconds, 0)/3600;
     const hours =  isNew? previewHours: tent.hours;
     const tier = HEAT_TIERS[heatTier];
-    const heats
+    const heatTier = isNew? tierForHours(hours): tent.heat_tier;
+
+    const logs = isNew? logsFor(hours, heatTier): tent.logs;
+    const canShip = !isNew && tent.status === "pitched" && hours >= SHIP_MINIMUM_HOURS;
+
+    function toggleProject(name: string) {
+        const current = form.data.hackatime_projects;
+        form.setData(
+            "hackatime_projects",
+            current.includes(name)? current.filter((item) => item !== name): [...current, name],
+        );
+    }
+    function resync() {
+        setSyncing(true);
+        router.post(
+            "/tents/sync", {}, {
+                preserveScroll: true,
+                onFinish:()=> setSyncing(false),
+            },
+        );
+    }
+    function submit(event: React.FormEvent) {
+        event.preventDefault();
+        const options = {preserveScroll: true, onSuccess: onClose};
+        if (isNew) form.post("/tents", options);
+        else form.patch(`/tents/${tent.id}`, options);
+    }
+    function ship() {
+        if ((!tent) return;
+		router.post(`/tents/${tent.id}/ship`, {}, {onSuccess: onClose});)
+    }
+
+    return (
+        <form onSubmit={submit}>
+            <div>
+                <TentArt flag={tier.flag} className="w-20 shrink-0"/>
+                <div>
+                    <Dialog.Title className="text-2xl font-semibold">
+						{isNew? "pitch a new tent":tent.name}
+					</Dialog.Title>
+                    <div>
+                        <span>
+                            {tier.label} · {tier.rate} logs/hour
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    )
 }
