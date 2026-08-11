@@ -51,7 +51,7 @@ export default function LandingPage({
 						THIS IS THE RELEASE VERSION.
 					</div>
 				)}
-				<Navbar />
+				<Navbar release_flipper={release_flipper} />
 				<div className="relative isolate w-full h-[750px] bg-linear-to-b from-night-blue to-card">
 					<EmojiSnow />
 					<div className="grid grid-cols-2 max-w-7xl h-full mx-auto">
@@ -78,6 +78,7 @@ export default function LandingPage({
 											type="email"
 											id="email"
 											name="email"
+											required
 											placeholder={"mrrp@lazyllama.xyz"}
 										/>
 

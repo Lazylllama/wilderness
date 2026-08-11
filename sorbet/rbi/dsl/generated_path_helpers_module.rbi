@@ -16,6 +16,9 @@ module GeneratedPathHelpersModule
   def dashboard_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def docs_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_tent_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }

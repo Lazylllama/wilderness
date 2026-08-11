@@ -2,8 +2,6 @@ class LandingController < InertiaController
   def index
     @items = ShopItem.all
 
-    Rails.logger.debug "notice: #{notice.inspect}"
-
     render inertia: {
       release_flipper: Flipper.enabled?(:release),
       hour_multipliers: Tier::HOUR_MULTIPLIER,

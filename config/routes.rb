@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   root "landing#index"
 
+  get "docs", to: "docs#index"
   get "test", to: "landing#test" if Rails.env.development?
 
   get "auth/:provider/callback", to: "sessions#create"
