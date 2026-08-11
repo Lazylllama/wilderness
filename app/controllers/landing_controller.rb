@@ -2,6 +2,8 @@ class LandingController < InertiaController
   def index
     @items = ShopItem.all
 
+    Rails.logger.debug "notice: #{notice.inspect}"
+
     render inertia: {
       release_flipper: Flipper.enabled?(:release),
       hour_multipliers: Tier::HOUR_MULTIPLIER,
@@ -13,7 +15,14 @@ class LandingController < InertiaController
           price: item.price,
           image_url: item.image_url
         }
-      end
+      end,
+      alert_data: notice.present? ? {
+          title: notice["title"] || "Alert",
+          description: notice["description"] || "Something happened, but we don't know what.",
+          iconName: notice["iconName"] || "CircleAlert",
+          variant: notice["variant"] || "warning"
+        }
+       : nil
     }
   end
 

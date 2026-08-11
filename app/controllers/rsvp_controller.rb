@@ -7,6 +7,11 @@ class RsvpController < ApplicationController
     # lets make them sign in like normal then add them to all
     # our channels etc with ze slack id
 
-    # redirect_to root_path, notice: user.persisted? ? "Looking forward to seeing you :)" : "Something went wrong, please try again."
+    redirect_to root_path, notice: {
+        title: "you press button",
+        description: "thank you for pressing the button, i will now just say random stuff to fill out this space of emptiness",
+        iconName: "Tent",
+        variant: "normal"
+    }
   end
 end
