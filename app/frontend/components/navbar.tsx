@@ -2,7 +2,11 @@ import { MoveUpRight } from "lucide-react";
 import { Button } from "@/components/wilderness/button";
 import { WildernessLogo } from "./logo";
 
-export function Navbar() {
+export function Navbar({
+	release_flipper = false,
+}: {
+	release_flipper: boolean;
+}) {
 	function ScrollToSection(id: string) {
 		const section = document.getElementById(id);
 		if (section) {
@@ -31,10 +35,13 @@ export function Navbar() {
 				</div>
 			</div>
 			<div className="flex flex-row gap-2 items-center">
-				<Button variant="link" className="text-lg">
+				<Button disabled={!release_flipper} variant="link" className="text-lg">
 					sign in
 				</Button>
-				<Button className="flex items-center flex-row gap-1">
+				<Button
+					disabled={!release_flipper}
+					className="flex items-center flex-row gap-1"
+				>
 					setup your tent
 					<MoveUpRight size={20} strokeWidth={3} />
 				</Button>

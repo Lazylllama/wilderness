@@ -16,6 +16,9 @@ module GeneratedUrlHelpersModule
   def dashboard_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def docs_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def edit_tent_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }

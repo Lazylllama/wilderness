@@ -13,7 +13,14 @@ class LandingController < InertiaController
           price: item.price,
           image_url: item.image_url
         }
-      end
+      end,
+      alert_data: notice.present? ? {
+          title: notice["title"] || "Alert",
+          description: notice["description"] || "Something happened, but we don't know what.",
+          iconName: notice["iconName"] || "CircleAlert",
+          variant: notice["variant"] || "warning"
+        }
+       : nil
     }
   end
 
