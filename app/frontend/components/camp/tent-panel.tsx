@@ -1,6 +1,6 @@
-import {Dialog} from "@base-ui/react";
+import {Dialog, Field} from "@base-ui/react";
 import {router, useForm} from "@inertiajs/react";
-import {Github, Globe} from "lucide-react";
+import {Github, Globe, X} from "lucide-react";
 import {Button} from "@/components/wilderness/button";
 import {Input} from "@/components/wilderness/input";
 import {Label} from "@/components/wilderness/label";
@@ -8,10 +8,14 @@ import {
     formatLogs,
     formatHours,
     HEAT_TIERS,
+    logsFor,
+	relativeTime,
+	tierForHours,
 } from "@/lib/camp-layout";
 import type {HackatimeProject, Tent} from "@/types/camp";
 import {HackatimePicker} from "./hackatime-picker";
 import {TentArt} from "./art";
+import {cn} from "@/lib/utils";
 
 
 const SHIP_MINIMUM_HOURS = 1;
@@ -102,10 +106,43 @@ function TentPanelBody({
 					</Dialog.Title>
                     <div>
                         <span>
-                            {tier.label} · {tier.rate} logs/hour
+                            {tier.label} · {tier.rate} logs/hr
                         </span>
+
+                        {!isNew && (
+                            <span>
+                                synced {relativeTime(tent.hackatime_synced_at)}
+                            </span>
+                        )}
                     </div>
+                    <Dialog.Description className="font-serif text-sm text-foreground/67">
+                        {isNew? "name it, link the hackatime projects you'll code in, and it goes up in the clearing.": "everything about this project lives here."}
+                    </Dialog.Description>
                 </div>
+                <Dialog.close>
+                    <X size={18} strokeWidth={3}/>
+                </Dialog.close>
+            </div>
+
+            <div>
+                <Stat value={formatHours(hours)} label="hours logged"/>
+				<Stat value={formatLogs(logs)} label="logs earned"/>
+            </div>
+            <Field label="project name" error={form.errors.name}>
+                <Input value={form.data.name} onChange={(e)=> form.setData("name", e.target.value)} required maxLength={60} placeholder="solder-sim"/>
+            </Field>
+
+            <Field label="what is it?" error={form.errors.description}>
+                <textarea value={form.data.description} onChange={(e) => form.setData("description", e.target.value)} placeholder="a browser circuit app where you can burn your fingers, of course virtually." rows={3} maxLength={267}/>
+            </Field>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+                <Field label="github repo">
+                    <div className="relative">
+                        <Github size={18} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-foreground/40"/>
+                        <Input type="url" inputMode="url" value={form.data.repo_url} onChange={(e)=> form.setData("repo_url", e.target.value)} placeholder="https://github.com/hackclub/..."/>
+                    </div>
+                </Field>
             </div>
         </form>
     )
