@@ -17,9 +17,11 @@ Rails.application.routes.draw do
   get "inertia-example", to: "inertia_example#index"
 
   post "rsvp", to: "rsvp#create"
+   get "camp", to: "dashboard#index",as: :camp
 
   resources :tents, except: [ :show, :destroy ] do
     post :sync, on: :collection
+    post :ship, on: :member
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

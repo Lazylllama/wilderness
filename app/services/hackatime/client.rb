@@ -26,7 +26,7 @@ module Hackatime
             uri = URI("#{BASE_URL}/#{path}")
             query = params.compact
             uri.query = URI.encode_www_form(query) if query.any?
-            response = Net::HTTP.start(uri.host, uri.port, use_ssl: true, pen_timeout: TIMEOUT, read_timeout: TIMEOUT) do |http| http.get(uri.request_uri, "User-Agent"=> USER_AGENT)
+            response = Net::HTTP.start(uri.host, uri.port, use_ssl: true, open_timeout: TIMEOUT, read_timeout: TIMEOUT) do |http| http.get(uri.request_uri, "User-Agent"=> USER_AGENT)
             end
 
             case response

@@ -20,6 +20,20 @@ class User < ApplicationRecord
   has_many :tents, dependent: :destroy
 
   def hackatime_identifier
-    slack_id.presence||hc_uid
+    slack_id.presence||email
   end
+
+
+  def streak
+    return 0 if last_logged_at.blank?((Date.current-last_logged_at.to_date).to_i <=1)? streak_days: 0
+  end
+
+  def fire_state
+    hours = tents.sum(&:hours)
+    case hours
+      when 0...5 then "embers"
+      when 5...20 then "smoldering"
+      when 20...50 then "crackling"
+      when 50...100 then "roaring"
+      else "blazing"
 end
