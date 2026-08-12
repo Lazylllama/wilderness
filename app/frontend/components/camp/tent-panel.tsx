@@ -23,13 +23,15 @@ type TentPanel = {
     tent: Tent | null;
     plotIndex: number | null;
     projects: HackatimeProject[];
+    open: boolean;
+	onOpenChange: (open: boolean)=> void;
 };
 
 export function TentPanel({
-    tent, plotIndex, projects,
+    tent, plotIndex, projects, open, onOpenChange,
 }:TentPanel) {
     return (
-        <Dialog.root>
+        <Dialog.Root open={open} onOpenChange={onOpenChange}>
             <Dialog.portal>
                 <Dialog.backdrop/>
                 <Dialog.Popup>
@@ -184,10 +186,10 @@ function TentPanelBody({
 }
 function Stat({value, label}: {value: string; label: string}) {
     return (
-        <div>
-            <div className="text-3xl font-semibold text-primary">{value}</div>
+        <div className="rounded-xl border border-border p-4">
+			<div className="text-3xl font-semibold text-primary">{value}</div>
 			<div className="font-serif text-sm text-foreground/60">{label}</div>
-        </div>
+		</div>
     );
 }
 
