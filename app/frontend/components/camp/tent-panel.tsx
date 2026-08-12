@@ -140,10 +140,72 @@ function TentPanelBody({
                 <Field label="github repo">
                     <div className="relative">
                         <Github size={18} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-foreground/40"/>
-                        <Input type="url" inputMode="url" value={form.data.repo_url} onChange={(e)=> form.setData("repo_url", e.target.value)} placeholder="https://github.com/hackclub/..."/>
+                        <Input type="url" inputMode="url" value={form.data.repo_url} onChange={(e)=> form.setData("repo_url", e.target.value)} placeholder="https://github.com/your_username/..." className="w-full pl-10 text-base"/>
+                    </div>
+                </Field>
+                <Field label="demo url" error={form.errors.demo_url}>
+                    <div className="relative">
+                        <Globe size={18}/>
+                        <Input type="url" inputMode="url" value={form.data.demo_url} onChange={(e) => form.setData("demo_url", e.target.value)} placeholder="https://wilderness.hackclub.com" className="w-full pl-10 text-base"/>
                     </div>
                 </Field>
             </div>
+
+            <HackatimePicker projects={projects} selected={form.data.hackatime_projects} onSync={resync}/>
+            {form.errors.hackatime_projects &&(
+                <p>
+                    {form.errors.hackatime_projects}
+                </p>
+            )}
+
+            <div>
+                <Button type="submit" disabled={form.processing}>
+                    {form.processing? "saving…": isNew? "pitch it": "save changes"}
+                </Button>
+
+                {canShip && (
+                    <Button type="button" variant="secondary" onClick={ship}>
+                        ship it!
+                    </Button>
+                )}
+
+                {!isNew && !canShip && tent.status === "pitched" && (
+                    <span>
+                        {formatHours(Math.max(0, SHIP_MINIMUM_HOURS - hours))} until you can ship
+                    </span>
+                )}
+
+                <Button type="button" onClick={onClose}>
+                    not yet
+                </Button>
+            </div>
         </form>
-    )
+    );
+}
+function Stat({value, label}: {value: string; label: string}) {
+    return (
+        <div>
+            <div className="text-3xl font-semibold text-primary">{value}</div>
+			<div className="font-serif text-sm text-foreground/60">{label}</div>
+        </div>
+    );
+}
+
+function Field({
+    label, error, children,
+}: {
+    label: string
+    error?: string;
+    children: React.ReactNode;
+}) {
+    return (
+        <Label className="w-full">
+            {label}{children}
+            {error && (
+				<span className="text-xs font-normal text-destructive-foreground">
+					{error}
+				</span>
+			)}
+        </Label>
+    );
 }
