@@ -11,8 +11,8 @@ services:
       - bundle:/usr/local/bundle
       - node_modules:/rails/node_modules
     ports:
-      - "3000:3000" # Rails
-      - "3036:3036" # Vite dev server / HMR
+      - "127.0.0.1:3000:3000" # Rails
+      - "127.0.0.1:3036:3036" # Vite dev server / HMR
     environment:
       CAPYBARA_SERVER_PORT: "45678"
       SELENIUM_HOST: "selenium"
@@ -40,7 +40,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5433:5432" # host 5432 is often already taken; app talks to `db:5432` internally
+      - "127.0.0.1:5433:5432" # host 5432 is often already taken; app talks to `db:5432` internally
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 2s

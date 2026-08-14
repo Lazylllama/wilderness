@@ -4,10 +4,10 @@ class ShipSubmission < ApplicationRecord
     has_one :log_transaction, as: :sourceable
 
     STATUSES = %w[pending approved changes_requested].freeze
-    validates :status, inclusion: {in: STATUSES}
+    validates :status, inclusion: { in: STATUSES }
 
     def submitted_hours = submitted_seconds.to_f/3600
-    def payable_seconds = [submitted_seconds - tent.paid_seconds, 0].max
+    def payable_seconds = [ submitted_seconds - tent.paid_seconds, 0 ].max
     def payable_logs = (payable_seconds.to_f/3600* rate).round
 
     def approve!(reviewer:, notes: nil)
@@ -23,7 +23,6 @@ class ShipSubmission < ApplicationRecord
             tent.update!(paid_seconds: submitted_seconds, status: "approved")
 
             update!(status: "approved", reviewer: reviewer, review_notes: notes, reviewed_at: Time.current)
-
         end
         true
     rescue ActiveRecord::RecordNotUnique
@@ -35,7 +34,7 @@ class ShipSubmission < ApplicationRecord
         transaction do
             tent.update!(status: "changes_requested")
             update!(status: "changes_requested", reviewer:, review_notes: notes, reviewed_at: Time.current)
-        end 
+        end
         true
     end
 end

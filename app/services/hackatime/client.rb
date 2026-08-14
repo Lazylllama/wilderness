@@ -29,7 +29,7 @@ module Hackatime
             response = Net::HTTP.start(uri.host, uri.port, use_ssl: true, open_timeout: TIMEOUT, read_timeout: TIMEOUT) do |http| http.get(uri.request_uri, "User-Agent"=> USER_AGENT)
             end
 
-            ase response
+            case response
             when Net::HTTPSuccess then JSON.parse(response.body)
             when Net::HTTPNotFound
                 raise NotFound, "no hackatime account for #{@identifier}"
@@ -37,6 +37,7 @@ module Hackatime
                 raise StatsPrivate, "turn on public stats in your hackatime settings https://hackatime.hackclub.com/my/settings/privacy"
             else
                 raise Error, "hackatime responded #{response.code}"
+            end
         end
     end
 end

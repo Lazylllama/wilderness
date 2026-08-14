@@ -6,18 +6,17 @@ Rails.application.routes.draw do
 
   root "landing#index"
 
-  get "docs", to: "docs#index"
+  get "docs", to: "docs#index" if Flipper.enabled?(:release)
   get "test", to: "landing#test" if Rails.env.development?
 
-  get "auth/:provider/callback", to: "sessions#create"
-  get "auth/failure", to: "sessions#failure"
-  delete "logout", to: "sessions#destroy"
+  get "auth/:provider/callback", to: "session#create"
+  get "auth/failure", to: "session#failure"
+  delete "logout", to: "session#destroy"
 
   get "dashboard", to: "dashboard#index"
-  get "inertia-example", to: "inertia_example#index"
+  get "camp", to: "dashboard#index", as: :camp
 
   post "rsvp", to: "rsvp#create"
-   get "camp", to: "dashboard#index",as: :camp
 
   resources :tents, except: [ :show, :destroy ] do
     post :sync, on: :collection
