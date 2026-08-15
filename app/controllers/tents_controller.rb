@@ -1,6 +1,6 @@
 class TentsController < InertiaController
     before_action :require_authentication
-    before_action :set_tent, only:%i[edit update ship]
+    before_action :set_tent, only: %i[edit update ship]
 
     def new
         redirect_to camp_path
@@ -16,7 +16,7 @@ class TentsController < InertiaController
             SyncHackatimeJob.perform_later(current_user)
             redirect_to camp_path, notice: "tent pitched"
         else
-            redirect_to camp_path, inertia: {errors: tent.errors}
+            redirect_to camp_path, inertia: { errors: tent.errors }
         end
     end
 
@@ -24,8 +24,8 @@ class TentsController < InertiaController
         if @tent.update(tent_params)
             SyncHackatimeJob.perform_later(current_user)
             redirect_to camp_path, notice: "camp updated"
-        else 
-            redirect_to camp_path, inertia: {errors: @tent.errors}
+        else
+            redirect_to camp_path, inertia: { errors: @tent.errors }
         end
     end
     def ship
@@ -41,14 +41,13 @@ class TentsController < InertiaController
   def set_tent
     @tent = current_user.tents.find(params[:id])
   end
+
   def next_free_plot
-    taken current_user.tents.pluck(:plot_index)(0...8).find {|index| taken.exclude?(index)} || 0
+    taken = current_user.tents.pluck(:plot_index)
+    (0...8).find { |index| taken.exclude?(index) } || 0
   end
 
   def tent_params
-    params.expect(tent: [:name, :description, :repo_url, :demo_url, :plot_index,{hackatime_projects:[]}])
+    params.expect(tent: [ :name, :description, :repo_url, :demo_url, :plot_index, { hackatime_projects: [] } ])
   end
 end
-
-
-

@@ -13,6 +13,9 @@ module GeneratedUrlHelpersModule
   def auth_failure_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def camp_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def dashboard_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -20,9 +23,6 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def edit_tent_url(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def inertia_example_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def logout_url(*args); end
@@ -122,6 +122,9 @@ module GeneratedUrlHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def rsvp_url(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def ship_tent_url(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def sync_tents_url(*args); end

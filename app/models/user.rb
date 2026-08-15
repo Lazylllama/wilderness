@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
+
   def self.from_omniauth(auth)
     user = find_or_initialize_by(hc_uid: auth.uid)
 
@@ -23,9 +24,12 @@ class User < ApplicationRecord
     slack_id.presence||email
   end
 
+  def last_logged_at
+  end
 
   def streak
-    0 if last_logged_at.blank?((Date.current-last_logged_at.to_date).to_i <=1)? streak_days: 0
+    return 0 if last_logged_at.blank?
+    (Date.current-last_logged_at.to_date).to_i <=1 ? streak_days: 0
   end
 
   def fire_state

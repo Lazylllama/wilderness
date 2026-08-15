@@ -25,7 +25,7 @@ export function CampTent({
 	return (
 		<CampObject x={x} y={y}>
 			<button
-				type
+				type="button"
 				onClick={() => onOpen(tent)}
 				aria-label={`${tent.name}, ${formatHours(tent.hours)} logged, ${tier.label}`}
 				className={cn(

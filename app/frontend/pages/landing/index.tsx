@@ -1,6 +1,6 @@
 import { Form } from "@inertiajs/react";
 import type { VariantProps } from "class-variance-authority";
-import { FlameKindling, type LucideIcon, MoveUpRight } from "lucide-react";
+import { FlameKindling, MoveUpRight } from "lucide-react";
 import {
 	HeatTierCards,
 	ShopPreview,
