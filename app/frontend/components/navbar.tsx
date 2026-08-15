@@ -1,5 +1,6 @@
 import { MoveUpRight } from "lucide-react";
 import { Button } from "@/components/wilderness/button";
+import { LoginButton } from "./auth-buttons";
 import { WildernessLogo } from "./logo";
 
 export function Navbar({
@@ -35,9 +36,13 @@ export function Navbar({
 				</div>
 			</div>
 			<div className="flex flex-row gap-2 items-center">
-				<Button disabled={!release_flipper} variant="link" className="text-lg">
+				<LoginButton
+					disabled={!release_flipper}
+					variant="link"
+					className="text-lg"
+				>
 					sign in
-				</Button>
+				</LoginButton>
 				<Button
 					disabled={!release_flipper}
 					className="flex items-center flex-row gap-1"

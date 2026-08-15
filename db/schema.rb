@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_09_215912) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_14_010217) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -38,6 +38,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_09_215912) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tents", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "demo_url"
+    t.text "description"
+    t.json "hackatime_projects", default: [], null: false
+    t.integer "hackatime_seconds", default: 0, null: false
+    t.datetime "hackatime_synced_at"
+    t.datetime "last_heartbeat_at"
+    t.string "name", null: false
+    t.integer "plot_index"
+    t.string "repo_url"
+    t.datetime "shipped_at"
+    t.string "status", default: "pitched", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "plot_index"], name: "index_tents_on_user_id_and_plot_index", unique: true
+    t.index ["user_id"], name: "index_tents_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", null: false
@@ -51,4 +70,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_09_215912) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["hc_uid"], name: "index_users_on_hc_uid", unique: true
   end
+
+  add_foreign_key "tents", "users"
 end

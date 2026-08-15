@@ -8,7 +8,7 @@ class SyncHackatimeJob < ApplicationJob
     def perform(user)
       projects = Hackatime::Client.new(user.hackatime_identifier).projects
       user.update!(hackatime_snapshot: projects)
-      by_name = projects.index_by {|project| project["name"]}
+      by_name = projects.index_by { |project| project["name"] }
 
     user.tents.find_each do |tent|
       claimed = tent.hackatime_projects.filter_map { |name|by_name[name] }

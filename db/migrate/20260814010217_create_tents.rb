@@ -15,6 +15,6 @@ class CreateTents < ActiveRecord::Migration[8.1]
       t.datetime :shipped_at
       t.timestamps
     end
-    add_index :tents, [:user_id, :plot_index], unique: true
+    add_index :tents, [ :user_id, :plot_index ], unique: true
   end
 end

@@ -15,7 +15,7 @@ class DashboardController < InertiaController
     }
   end
 
-  private 
+  private
   def tent_props(tent)
     tent.as_json(only: %i[id name description repo_url demo_url hackatime_projects status plot_index last_heartbeat_at hackatime_synced_at shipped_at])
     .merge("hours"=> tent.hours.round(1), "logs"=> tent.logs, "heat_tier" => tent.heat_tier)
