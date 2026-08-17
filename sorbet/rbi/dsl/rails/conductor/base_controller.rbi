@@ -19,6 +19,7 @@ class Rails::Conductor::BaseController
     include ::ViteRails::TagHelpers
     include ::ActionController::Base::HelperMethods
     include ::ApplicationHelper
+    include ::RsvpHelper
   end
 
   class HelperProxy < ::ActionView::Base

@@ -72,11 +72,11 @@ function Stars() {
 export function CampStage({
 	night,
 	glow,
-	children,
+	// children,
 }: {
 	night: boolean;
 	glow: number;
-	children: React.ReactNode;
+	// children: React.ReactNode;
 }) {
 	return (
 		<div

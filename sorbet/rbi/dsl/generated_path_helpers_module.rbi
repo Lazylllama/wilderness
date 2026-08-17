@@ -13,6 +13,9 @@ module GeneratedPathHelpersModule
   def auth_failure_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
+  def camp_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
   def dashboard_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
@@ -20,9 +23,6 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def edit_tent_path(*args); end
-
-  sig { params(args: T.untyped).returns(String) }
-  def inertia_example_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def logout_path(*args); end
@@ -122,6 +122,9 @@ module GeneratedPathHelpersModule
 
   sig { params(args: T.untyped).returns(String) }
   def rsvp_path(*args); end
+
+  sig { params(args: T.untyped).returns(String) }
+  def ship_tent_path(*args); end
 
   sig { params(args: T.untyped).returns(String) }
   def sync_tents_path(*args); end
