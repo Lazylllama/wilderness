@@ -9,7 +9,7 @@ export const PLOTS = [
 export const PLOT_COUNT = PLOTS.length;
 export const FIRE = { x: 50, y: 58 } as const;
 export const CART = { x: 15, y: 95 } as const;
-
+export const RANGER = { x: 85, y: 88 } as const;
 export function plotFor(index: number) {
 	return PLOTS[index % PLOTS.length];
 }

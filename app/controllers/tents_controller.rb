@@ -1,4 +1,5 @@
 class TentsController < InertiaController
+    before_action :require_camp_access
     before_action :require_authentication
     before_action :set_tent, only: %i[edit update ship]
 

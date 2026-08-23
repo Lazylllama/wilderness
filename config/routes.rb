@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   root "landing#index"
 
-  get "docs", to: "docs#index" if Flipper.enabled?(:release)
+  get "docs#index", to: "docs#index" if Flipper.enabled?(:release)
   get "test", to: "landing#test" if Rails.env.development?
 
   get "auth/:provider/callback", to: "session#create"
@@ -16,11 +16,19 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index"
   get "camp", to: "dashboard#index", as: :camp
 
-  post "rsvp", to: "rsvp#create"
 
   resources :tents, except: [ :show, :destroy ] do
     post :sync, on: :collection
     post :ship, on: :member
+  end
+
+  namespace :admin do
+    root to: "overview#index"
+    get "users", to: "users#index"
+    patch "users/:id", to: "users#update", as: :user
+    get "tents", to: "tents#index"
+    get "flags", to: "flags#index"
+    patch "flags/:name", to: "flags#update", as: :flag
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

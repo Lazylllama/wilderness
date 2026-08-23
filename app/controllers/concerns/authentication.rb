@@ -1,7 +1,7 @@
 module Authentication
   extend ActiveSupport::Concern
   included do
-    helper_method :current_user, :signed_in?
+    helper_method :current_user, :signed_in?, :camp_access?
   end
 
   private
@@ -12,6 +12,10 @@ module Authentication
 
   def signed_in?
     current_user.present?
+  end
+
+  def camp_access?
+    current_user.present? && current_user.camp_access?
   end
 
   def sign_in(user)
@@ -29,4 +33,14 @@ module Authentication
     return if signed_in?
     redirect_to root_path, alert: "set up your tent first!"
   end
+
+  def require_camp_access
+    return if camp_access?
+    redirect_to root_path, notice: {
+      title: "wilderness isn't open yet",
+      description: "you're on the list. we'll let you the moment the fire's lit.",
+      iconName: "Tent",
+      variant: "normal"
+    }
+end
 end

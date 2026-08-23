@@ -4,6 +4,8 @@ class LandingController < InertiaController
 
     render inertia: {
       release_flipper: Flipper.enabled?(:release),
+      camp_open: Flipper.enabled?(:camp),
+      rsvp_count: User.rsvp_count,
       hour_multipliers: Tier::HOUR_MULTIPLIER,
       base_hour_rate: Tier::BASE_HOUR_RATE,
       items: @items.map do |item|
@@ -14,17 +16,22 @@ class LandingController < InertiaController
           image_url: item.image_url
         }
       end,
-      alert_data: notice.present? ? {
-          title: notice["title"] || "Alert",
-          description: notice["description"] || "Something happened, but we don't know what.",
-          iconName: notice["iconName"] || "CircleAlert",
-          variant: notice["variant"] || "warning"
-        }
-       : nil
+      alert_data: flash_alert
     }
   end
-
   def test
     render inertia: {}
+  end
+  private
+  def flash_alert
+    raw = notice.presence || alert.presence
+    return nil if raw.blank?
+    raw = { "description" => raw } if raw.is_a?(String)
+    {
+      title: raw["title"].presence || "heads up",
+      description: raw["description"].presence || "an error happened.",
+      iconName: raw["iconName"].presence || "CircleAlert",
+      variant: raw["variant"].presence || (alert.present? ? "warning" : "normal")
+    }
   end
 end

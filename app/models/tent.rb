@@ -13,7 +13,7 @@ class Tent < ApplicationRecord
 
     validates :status, inclusion: { in: STATUSES }
     validates :plot_index, presence: true, uniqueness: { scope: :user_id }
-    validates :repo_url, :demo_url, format: { with: %r{\Ahttps?://}, allow_blank: true, message: "must start with http" }
+    validates :repo_url, :demo_url, format: { with: %r{\Ahttps?://.*\z}, allow_blank: true, message: "must start with http" }
 
     def hours = hackatime_seconds.to_f/3600
     def rate = TIERS.fetch(heat_tier).last

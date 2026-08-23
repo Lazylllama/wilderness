@@ -62,7 +62,7 @@ function TentPanelBody({
 	projects: HackatimeProject[];
 }) {
 	const isNew = tent === null;
-	const [_syncing, setSyncing] = useState(false);
+	const [syncing, setSyncing] = useState(false);
 	const form = useForm({
 		name: tent?.name ?? "",
 		description: tent?.description ?? "",
@@ -84,7 +84,7 @@ function TentPanelBody({
 	const canShip =
 		!isNew && tent.status === "pitched" && hours >= SHIP_MINIMUM_HOURS;
 
-	function _toggleProject(name: string) {
+	function toggleProject(name: string) {
 		const current = form.data.hackatime_projects;
 		form.setData(
 			"hackatime_projects",
@@ -153,7 +153,7 @@ function TentPanelBody({
 				<Stat value={formatHours(hours)} label="hours logged" />
 				<Stat value={formatLogs(logs)} label="logs earned" />
 			</div>
-			<Field label="project name" error={form.errors.name}>
+			<Field label="project name" error={form.errors.name?.[0]}>
 				<Input
 					value={form.data.name}
 					onChange={(e) => form.setData("name", e.target.value)}
@@ -190,7 +190,7 @@ function TentPanelBody({
 						/>
 					</div>
 				</Field>
-				<Field label="demo url" error={form.errors.demo_url}>
+				<Field label="demo url" error={form.errors.demo_url?.[0]}>
 					<div className="relative">
 						<Globe size={18} />
 						<Input
@@ -206,10 +206,12 @@ function TentPanelBody({
 			</div>
 
 			<HackatimePicker
-				projects={projects}
-				selected={form.data.hackatime_projects}
-				onSync={resync}
-			/>
+	            projects={projects}
+	            selected={form.data.hackatime_projects}
+	            onToggle={toggleProject}
+	            onSync={resync}
+	            syncing={syncing}
+            />
 			{form.errors.hackatime_projects && (
 				<p>{form.errors.hackatime_projects}</p>
 			)}

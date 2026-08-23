@@ -15,6 +15,7 @@ export function HackatimePicker({
 	onSync: () => void;
 	syncing: boolean;
 }) {
+	return(
 	<>
 		<div className="flex flex-col gap-2">
 			<div className="flex items-center justify-between">
@@ -72,5 +73,6 @@ export function HackatimePicker({
 		<p className="font-serif text-xs text-foreground/40">
 			hours from every linked project add up into this tent&rsquo s; total.
 		</p>
-	</>;
+	</>
+	);
 }

@@ -23,7 +23,19 @@ export function LoginButton({
 		</form>
 	);
 }
-
+export function RsvpButton({
+		children, variant = "secondary", className, ...props
+}:AuthButton){
+	return (
+		<form action="/auth/hack_club" method="post" className="contents">
+			<input type="hidden" name="authenticity_token" value={csrfToken()}/>
+			<input type="hidden" name="origin" value="rsvp"/>
+			<Button type="submit" variant={variant} className={className} {...props}>
+			{children}
+			</Button>
+		</form>
+	);
+}
 export function LogoutButton({
 	children,
 	variant = "link",

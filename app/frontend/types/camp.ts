@@ -1,16 +1,25 @@
 export type HeatTier = "kindling" | "campfire" | "bonfire" | "wildfire";
-export type TentStatus = "pitched" | "shipped" | "approved";
 export type FireState =
 	| "embers"
 	| "smoldering"
 	| "crackling"
 	| "roaring"
 	| "blazing";
-
+export type TentStatus = 
+	| "pitched"
+	| "submitted"
+	| "approved"
+	| "changes_requested"
+	| "shipped";
 export type HackatimeProject = {
 	name: string;
 	total_seconds: number;
+	total_heartbeats: number;
+	languages: string[];
+	repo_url: string | null;
+	first_heartbeat: string | null;
 	last_heartbeat: string | null;
+	archived: boolean;
 	claimed_by: string | null;
 };
 

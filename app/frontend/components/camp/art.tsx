@@ -1,7 +1,7 @@
-type ArtProps = { className?: string };
-export function TentArt({ flag, className }: ArtProps & { flag: string }) {
+type ArtProps = { className?: string; style?: React.CSSProperties };
+export function TentArt({ flag, className, style }: ArtProps & { flag: string }) {
 	return (
-		<svg viewBox="0 0 140 140" className={className} aria-hidden="true">
+		<svg viewBox="0 0 140 140" className={className} style={style} aria-hidden="true">
 			<ellipse cx="70" cy="124" rx="50" ry="11" fill="#0d1409" opacity="0.45" />
 			<path
 				d="M70 34 L10 124"
@@ -29,9 +29,9 @@ export function TentArt({ flag, className }: ArtProps & { flag: string }) {
 	);
 }
 
-export function CampfireArt({ className }: ArtProps) {
+export function CampfireArt({ className, style }: ArtProps) {
 	return (
-		<svg viewBox="0 0 120 120" className={className} aria-hidden="true">
+		<svg viewBox="0 0 120 120" className={className} style={style} aria-hidden="true">
 			<ellipse cx="60" cy="102" rx="40" ry="9" fill="#0d1409" opacity="0.45" />
 			<ellipse cx="60" cy="98" rx="33" ry="8" fill="#2b2c21" />
 			<rect

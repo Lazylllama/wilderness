@@ -4,14 +4,14 @@ import { formatLogs } from "@/lib/camp-layout";
 import { cn } from "@/lib/utils";
 import type { Camp } from "@/types/camp";
 
-function pill({
+function Pill({
 	children,
 	className,
 }: {
 	children: React.ReactNode;
-	className: string;
+	className?: string;
 }) {
-	return <div>{children}</div>;
+	return <div className={cn("flex items-center gap-1.5", className)}>{children}</div>;
 }
 
 export function CampHud({
@@ -35,8 +35,8 @@ export function CampHud({
 			<div>
 				<button type="button" onClick={onToggleNight}>
 					<Pill>
-						{night ? <Moon size={16} /> : <Sun size={16} />}
-						{night ? "night" : "day"}
+						{night? <Moon size={16} />:<Sun size={16} />}
+						{night? "night" : "day"}
 					</Pill>
 				</button>
 				<Pill>
@@ -44,7 +44,6 @@ export function CampHud({
 					{camp.streak} day streak
 				</Pill>
 				<Pill>🪵 {formatLogs(camp.logs_balance)}</Pill>{" "}
-				{/* not AI emoji lol, temp*/}
 				<Link href="/shop" className="pointer-events-auto">
 					<Pill className="transition-colors hover:border-primary/67">
 						shop

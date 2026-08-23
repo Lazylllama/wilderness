@@ -1,32 +1,37 @@
 class DashboardController < InertiaController
+  before_action :require_camp_access
   before_action :require_authentication
 
   def index
-    tents = current_user.tents
     render inertia: "camp/index", props: {
-        camp: {
-          total_hours: tents.sum(&:hours).round(1),
-          fire_state: current_user.fire_state,
-          streak: current_user.streak,
-          logs_balance: 0,
-          plot_count: 8
-        },
-        tents: tents.map { |tent| tent_props(tent) },
-        hackatime_projects: hackatime_projects(tents)
+      camp: {
+        total_hours: tents.sum(&:hours).round(1),
+        fire_state: current_user.fire_state,
+        streak: current_user.streak,
+        logs_balance: current_user.logs_balance,
+        plot_count: 8
+      },
+      tents: tents.map { |tent| tent_props(tent) },
+      hackatime_projects: hackatime_projects(tents)
     }
   end
 
   private
+
+  def tents
+    @tents ||= current_user.tents.order(:plot_index).to_a
+  end
+
   def tent_props(tent)
     tent.as_json(only: %i[id name description repo_url demo_url hackatime_projects status plot_index last_heartbeat_at hackatime_synced_at shipped_at])
-    .merge("hours"=> tent.hours.round(1), "logs"=> tent.logs, "heat_tier" => tent.heat_tier)
+      .merge("hours" => tent.hours.round(1), "logs" => tent.logs_pending, "heat_tier" => tent.heat_tier)
   end
 
   def hackatime_projects(tents)
-    return [] # hackatime_snapshot doesnt exist
-    owner = tents.flat_map { |tent| tent.hackatime_projects.map { |name| } }.to_h
+    owner = tents.flat_map { |tent| tent.hackatime_projects.map { |name| [ name, tent.name ] } }.to_h
 
-    (current_user.hackatime_snapshot || []).map do |project|project.slice("name", "total_seconds").merge("claimed_by"=> owner[project["name"]])
-  end
+    (current_user.hackatime_snapshot || []).map do |project|
+      project.slice("name", "total_seconds").merge("claimed_by" => owner[project["name"]])
+    end
   end
 end

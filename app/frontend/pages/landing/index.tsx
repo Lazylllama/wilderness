@@ -1,6 +1,8 @@
-import { Form } from "@inertiajs/react";
+
+import { router, usePage } from "@inertiajs/react";
 import type { VariantProps } from "class-variance-authority";
 import { FlameKindling, MoveUpRight } from "lucide-react";
+import type { SharedProps } from "@/types";
 import {
 	HeatTierCards,
 	ShopPreview,
@@ -18,8 +20,7 @@ import { Trees } from "@/components/trees";
 import { Alert, type alertVariants } from "@/components/wilderness/alert";
 import { Button } from "@/components/wilderness/button";
 import { Card, CardContent } from "@/components/wilderness/card";
-import { Input } from "@/components/wilderness/input";
-import { Label } from "@/components/wilderness/label";
+import { RsvpButton } from "@/components/auth-buttons";
 
 export default function LandingPage({
 	release_flipper = false,
@@ -27,6 +28,7 @@ export default function LandingPage({
 	base_hour_rate,
 	items,
 	alert_data,
+	rsvp_count,
 }: {
 	release_flipper: boolean;
 	hour_multipliers: Record<string, number>;
@@ -41,7 +43,10 @@ export default function LandingPage({
 		description?: string;
 		iconName?: string;
 	};
+	rsvp_count: number;
 }) {
+	const { user } = usePage<SharedProps>().props;
+
 	return (
 		<>
 			{alert_data && <Alert {...alert_data} />}
@@ -70,29 +75,29 @@ export default function LandingPage({
 								<span className="text-primary/70">logs</span>, spend them on
 								straight peak in the shop.
 							</p>
-							<Form action="/rsvp" method="post">
-								<Label htmlFor="email" className="">
-									your email
-									<div className="flex flex-row gap-2 h-fit">
-										<Input
-											type="email"
-											id="email"
-											name="email"
-											required
-											placeholder={"mrrp@lazyllama.xyz"}
-										/>
-
-										<Button
-											type="submit"
-											variant={"secondary"}
-											className="h-fit"
-										>
-											{release_flipper ? "lets go" : "RSVP"}{" "}
-											<FlameKindling size={20} strokeWidth={3} />
-										</Button>
-									</div>
-								</Label>
-							</Form>
+							{!user ? (
+								<div className="flex flex-col gap-2 w-fit">
+									<RsvpButton>
+										RSVP <FlameKindling size={20} strokeWidth={3}/>
+									</RsvpButton>
+									<span className="text-sm text-foreground/50 font-serif italic">
+										just one click — we use your hack club account
+									</span>
+								</div>
+							):user.camp_access? (
+								<Button onClick={() => router.visit("/camp")} className="w-fit">
+									enter camp <MoveUpRight size={20} strokeWidth={3}/>
+								</Button>
+							): (
+								<div className="flex flex-col gap-2 w-fit">
+									<span className="font-semibold text-secondary">
+										you&rsquo;re on the list, {user.name} ✓
+									</span>
+									<span className="text-sm text-foreground/50 font-serif italic">
+										{rsvp_count} users signed up so far
+									</span>
+								</div>
+							)}
 						</div>
 						<div className="col-span-1">{/* image go here */}</div>
 					</div>
