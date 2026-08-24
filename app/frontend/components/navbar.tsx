@@ -2,12 +2,17 @@ import { MoveUpRight } from "lucide-react";
 import { Button } from "@/components/wilderness/button";
 import { LoginButton } from "./auth-buttons";
 import { WildernessLogo } from "./logo";
+import { usePage } from "@inertiajs/react";
+import { Shield } from "lucide-react";
+import type { SharedProps } from "@/types";
 
 export function Navbar({
 	release_flipper = false,
 }: {
 	release_flipper: boolean;
 }) {
+	const { user } = usePage<SharedProps>().props;
+
 	function ScrollToSection(id: string) {
 		const section = document.getElementById(id);
 		if (section) {
@@ -36,6 +41,10 @@ export function Navbar({
 				</div>
 			</div>
 			<div className="flex flex-row gap-2 items-center">
+				{user?.admin && (
+					<a href="/admin" className="flex items-center gap-1.5 text-primary hover:text-primary-bottom font-semibold text-lg transition-colors"
+				><Shield size={20} strokeWidth={2.5}/>admin</a>
+				)}
 				<LoginButton
 					disabled={!release_flipper}
 					variant="link"
