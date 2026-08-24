@@ -41,11 +41,8 @@ class User < ApplicationRecord
     slack_id.presence||email
   end
 
-  def last_logged_at
-  end
-
   def streak
-  return 0 if last_logged_at.blank?
+    return 0 if last_logged_at.blank?
     (Date.current - last_logged_at.to_date).to_i <= 1 ? streak_days.to_i : 0
   end
 
@@ -61,5 +58,6 @@ class User < ApplicationRecord
   end
 
   def camp_access? = admin? || Flipper.enabled?(:camp, self)
-    def self.rsvp_count = rsvped.count
+
+  def self.rsvp_count = rsvped.count
 end
