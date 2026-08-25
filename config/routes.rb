@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     root to: "overview#index"
     get "users", to: "users#index"
     patch "users/:id", to: "users#update", as: :user
-    get "tents", to: "tents#index"
+    get "projects", to: "projects#index"
     get "flags", to: "flags#index"
     patch "flags/:name", to: "flags#update", as: :flag
   end
