@@ -13,8 +13,8 @@ import { cn } from "@/lib/utils";
 const TABS: { href: string; label: string; icon: LucideIcon }[] = [
 	{ href: "/admin", label: "overview", icon: LayoutDashboard },
 	{ href: "/admin/users", label: "campers", icon: Users },
-	{ href: "/admin/tents", label: "tents", icon: Tent },
-	{ href: "/admin/flags", label: "switches", icon: Flame },
+	{ href: "/admin/projects", label: "projects", icon: Tent },
+	{ href: "/admin/flags", label: "flipper", icon: Flame },
 ];
 
 export function AdminShell({

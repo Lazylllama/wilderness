@@ -19,13 +19,13 @@ export default function AdminOverview({
     flash_notice: string | null;
 }) {
     return (
-        <AdminShell title="how camp is doing" subtitle="who's on the list" flashNotice={flash_notice}>
+        <AdminShell title="Overview" subtitle="All the info" flashNotice={flash_notice}>
             <div className="flex flex-col gap-6">
                 <div className={
                     camp_open? "rounded-lg border border-pill-border bg-pill-background px-4 py-3 text-pill-foreground font-semibold"
 							:"rounded-lg border border-border bg-background/40 px-4 py-3 text-foreground/60 font-semibold"
                 }>
-                    {camp_open? "camp is open to everyone.": "camp is closed — only invited can get in."}
+                    {camp_open? "camp is open to everyone.": "camp not open, only invited can get in."}
                 </div>
 
                 <div className="grid grid-cols-3 gap-4">
@@ -33,16 +33,17 @@ export default function AdminOverview({
                     <Stat icon={Flame} label="users with access" value={stats.with_access}/>
 					<Stat icon={Shield} label="users" value={stats.admins}/>
 					<Stat icon={Tent} label="projects" value={stats.tents}/>
-                    <Stat icon={Flame} label="hours burned" value={stats.hours}/>
+                    <Stat icon={Tent} label="shipped" value={stats.shipped}/>
+                    <Stat icon={Flame} label="hours logged" value={stats.hours}/>
                 </div>
 
                 <Card>
                     <CardContent className="flex flex-col gap-3">
                         <h3 className="text-lg font-semibold">
-                            <h3 className="text-lg font-semibold">latest rsvps</h3>
-                            {recent.length === 0 && (
+                            <h3 className="text-lg font-semibold">Recent Signups</h3>
+						    {recent.length === 0 && (
 							<p className="font-serif italic text-foreground/50">
-								nobody&rsquo;s rsvped yet.
+								No signups yet, get someone to or else...
 							</p>
 						    )}
 

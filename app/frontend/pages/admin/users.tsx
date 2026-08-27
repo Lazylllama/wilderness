@@ -43,7 +43,7 @@ export default function AdminUsers({
     }
 
     return (
-        <AdminShell title="campers" subtitle="newest rsvps first" flashNotice={flash_notice}>
+        <AdminShell title="Users" subtitle="newest rsvps first" flashNotice={flash_notice}>
             <div className="flex flex-col gap-4">
                 <form onSubmit={runSearch} className="flex flex-row gap-2">
                     <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="name, email or slack id"/>

@@ -16,7 +16,7 @@ export default function AdminFlags({
 	flash_notice: string | null;
 }) {
     return (
-        <AdminShell title="big switches" subtitle="flip them to enable/disable the feature">
+        <AdminShell title="big switches" subtitle="flip them to enable/disable the feature" flashNotice={flash_notice}>
             <div className="flex flex-col gap-2">
                 {flags.map((flag) => (
                     <div key={flag.name}>
