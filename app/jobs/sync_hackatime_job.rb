@@ -6,7 +6,9 @@ class SyncHackatimeJob < ApplicationJob
     end
 
     def perform(user)
-      projects = Hackatime::Client.new(user.hackatime_identifier).projects
+      client = user.hackatime_connected? ?
+        Hackatime::Client.new(token: user.hackatime_access_token):Hackatime::Client.new(user.hackatime_identifier)
+      projects = client.projects
       user.update!(hackatime_snapshot: projects)
       by_name = projects.index_by { |project| project["name"] }
 
@@ -15,7 +17,9 @@ class SyncHackatimeJob < ApplicationJob
 
       tent.update!(
         hackatime_seconds: claimed.sum { |project|project["total_seconds"].to_i },
-        last_heartbeat_at: claimed.filter_map { |project| project["last_heartbeat"] }.max,
+        last_heartbeat_at: claimed.filter_map {|project|
+          project["most_recent_heartbeat"] || project["last_heartbeat"]
+        }.max,
         hackatime_synced_at: Time.current
       )
     end
