@@ -7,7 +7,8 @@ Very early-stage YSWS platform.
   - Shop items form DB
   - uhh falling snow
   - very awesome buttons
-- [Figma design ](https://www.figma.com/design/6zIEr8D7Dbz9ZpEBS3gJHy/foresty-forest?node-id=0-1&t=cWC6XEYNkyK3rPly-1)
+- [Figma design ](https://www.figma.com/design/6zIEr8D7Dbz9ZpEBS3gJHy/foresty-forest?node-id=0-1&t=cWC6XEYNkyK3rPly-1) [ts like 60% of the work]
+- Alerts
 - Hopes and prayers
 
 # dev
