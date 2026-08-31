@@ -17,7 +17,7 @@ class SyncHackatimeJob < ApplicationJob
 
       tent.update!(
         hackatime_seconds: claimed.sum { |project|project["total_seconds"].to_i },
-        last_heartbeat_at: claimed.filter_map {|project|
+        last_heartbeat_at: claimed.filter_map { |project|
           project["most_recent_heartbeat"] || project["last_heartbeat"]
         }.max,
         hackatime_synced_at: Time.current

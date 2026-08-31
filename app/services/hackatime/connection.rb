@@ -4,7 +4,7 @@ module Hackatime
     REVOKE_URL = "https://hackatime.hackclub.com/oauth/revoke".freeze
 
     def initialize(user) = @user = user
-    
+
     def complete!(code:, redirect_uri:)
         token = exchange(code, redirect_uri).fetch("access_token")
         profile = Client.new(token: token).me
@@ -44,5 +44,5 @@ module Hackatime
         raise Error, "hackatime responded #{response.code}" unless response.is_a?(Net::HTTPSuccess)
         response.body.present? ? JSON.parse(response.body) : {}
     end
-  end
+    end
 end
