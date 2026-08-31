@@ -2,9 +2,10 @@
 #   cp .env.production.example .env   # fill it in
 #   docker compose -f compose.prod.yml up -d --build
 #
-# Thruster terminates TLS on 443 (Let's Encrypt cert for $TLS_DOMAIN, cached in
-# the storage volume) and proxies to Puma. Already have nginx/Caddy in front?
-# Drop TLS_DOMAIN, map "127.0.0.1:3000:80" instead of 80/443, and proxy to that.
+# By default the app serves plain HTTP on $APP_PORT (default 3000) and something
+# else terminates TLS in front of it -- on Hack Club Nest, point your subdomain
+# at that port. Nothing in front? Set TLS_DOMAIN in .env and swap the ports
+# mapping for "80:80" + "443:443"; Thruster then gets its own Let's Encrypt cert.
 name: wilderness-prod
 
 services:
@@ -16,8 +17,7 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@db:5432/wilderness_production
     ports:
-      - "80:80"
-      - "443:443"
+      - "${APP_PORT:-3000}:80"
     volumes:
       - storage:/rails/storage
     depends_on:
