@@ -6,7 +6,7 @@ module Hackatime
         USER_AGENT = "wilderness (hackclub)".freeze
         TIMEOUT = 10
 
-        def initialize(identifier)
+        def initialize(identifier = nil, token: nil)
             raise ArgumentError, "identifier or token required" if identifier.blank? && token.blank?
             @identifier = identifier.to_s
             @token = token
@@ -22,7 +22,7 @@ module Hackatime
             else
                 get("users/#{CGI.escape(@identifier)}/projects/details",
                 start_date: since&.to_date&.iso8601).fetch("projects", [])
-        end
+            end
         end
 
 
@@ -32,15 +32,15 @@ module Hackatime
 
         private
         def get(path, **params)
-            request_headers = {"User-Agent" => USER_AGENT}
-            request_headers["Authorization"] = "Bearer #{@token}" if @token
-            response = Net::HTTP.start(uri.host, uri.port, use_ssl: true, open_timeout: TIMEOUT, read_timeout: TIMEOUT) do |http|
-                http.get(uri.request_uri, request_headers)
-            end
             uri = URI("#{BASE_URL}/#{path}")
             query = params.compact
             uri.query = URI.encode_www_form(query) if query.any?
-            response = Net::HTTP.start(uri.host, uri.port, use_ssl: true, open_timeout: TIMEOUT, read_timeout: TIMEOUT) do |http| http.get(uri.request_uri, "User-Agent"=> USER_AGENT)
+
+            request_headers = { "User-Agent" => USER_AGENT }
+            request_headers["Authorization"] = "Bearer #{@token}" if @token
+
+            response = Net::HTTP.start(uri.host, uri.port, use_ssl: true, open_timeout: TIMEOUT, read_timeout: TIMEOUT) do |http|
+                http.get(uri.request_uri, request_headers)
             end
 
             case response

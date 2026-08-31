@@ -39,6 +39,8 @@ class TentsController < InertiaController
         redirect_to camp_path
     end
 
+  private
+
   def set_tent
     @tent = current_user.tents.find(params[:id])
   end
@@ -49,6 +51,6 @@ class TentsController < InertiaController
   end
 
   def tent_params
-    params.expect(tent: [ :name, :description, :repo_url, :demo_url, :plot_index, { hackatime_projects: [] } ])
+    params.permit(:name, :description, :repo_url, :demo_url, :plot_index, hackatime_projects: [])
   end
 end

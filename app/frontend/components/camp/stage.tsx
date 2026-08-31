@@ -72,11 +72,11 @@ function Stars() {
 export function CampStage({
 	night,
 	glow,
-	// children,
+	children,
 }: {
 	night: boolean;
 	glow: number;
-	// children: React.ReactNode;
+	children: React.ReactNode;
 }) {
 	return (
 		<div
@@ -93,6 +93,7 @@ export function CampStage({
 				<Trees count={44} />
 			</div>
 			<Ground />
+			{children}
 			<div className="pointer-events-none absolute inset-x-0 bottom-[-4%] z-20 origin-bottom scale-90 opacity-90">
 				<Trees count={26} />
 			</div>

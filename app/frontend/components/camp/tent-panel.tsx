@@ -36,14 +36,15 @@ export function TentPanel({
 	return (
 		<Dialog.Root open={open} onOpenChange={onOpenChange}>
 			<Dialog.Portal>
-				<Dialog.Backdrop />
-				<Dialog.Popup>
+				<Dialog.Backdrop className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" />
+				<Dialog.Popup className="fixed left-1/2 top-1/2 z-50 max-h-[90dvh] w-[min(42rem,92vw)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-border bg-card p-6">
 					{open && (
 						<TentPanelBody
 							key={tent?.id ?? `new-${plotIndex}`}
 							tent={tent}
 							plotIndex={plotIndex}
 							projects={projects}
+							onClose={() => onOpenChange(false)}
 						/>
 					)}
 				</Dialog.Popup>
@@ -56,10 +57,12 @@ function TentPanelBody({
 	tent,
 	plotIndex,
 	projects,
+	onClose,
 }: {
 	tent: Tent | null;
 	plotIndex: number | null;
 	projects: HackatimeProject[];
+	onClose: () => void;
 }) {
 	const isNew = tent === null;
 	const [syncing, setSyncing] = useState(false);
@@ -104,10 +107,6 @@ function TentPanelBody({
 				onFinish: () => setSyncing(false),
 			},
 		);
-	}
-
-	function onClose() {
-		// how was this missing?!?!
 	}
 
 	function submit(event: React.FormEvent) {

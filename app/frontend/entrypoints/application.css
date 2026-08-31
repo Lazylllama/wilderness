@@ -5,6 +5,10 @@
 
 @theme inline {
 	--animate-snow: snow linear infinite;
+	--animate-flicker: flicker 2.4s ease-in-out infinite;
+	--animate-flicker-fast: flicker 1.3s ease-in-out infinite;
+	--animate-drift: drift ease-in-out infinite;
+	--animate-twinkle: twinkle 4s ease-in-out infinite;
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
 	--font-sans: var(--font-family-sans);
@@ -106,5 +110,50 @@
 	}
 	to {
 		transform: translate(-30vw, 110vh);
+	}
+}
+
+@keyframes flicker {
+	0%,
+	100% {
+		transform: scale(1, 1);
+		opacity: 1;
+	}
+	25% {
+		transform: scale(0.96, 1.06);
+		opacity: 0.9;
+	}
+	50% {
+		transform: scale(1.04, 0.95);
+		opacity: 1;
+	}
+	75% {
+		transform: scale(0.98, 1.03);
+		opacity: 0.94;
+	}
+}
+
+@keyframes drift {
+	0%,
+	100% {
+		transform: translate(0, 0);
+		opacity: 0;
+	}
+	20%,
+	80% {
+		opacity: 0.85;
+	}
+	50% {
+		transform: translate(26px, -32px);
+	}
+}
+
+@keyframes twinkle {
+	0%,
+	100% {
+		opacity: 0.2;
+	}
+	50% {
+		opacity: 1;
 	}
 }

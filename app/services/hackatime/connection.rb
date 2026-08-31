@@ -6,7 +6,7 @@ module Hackatime
     def initialize(user) = @user = user
     
     def complete!(code:, redirect_uri:)
-        token = xchange(code, redirect_uri).fetch("access_token")
+        token = exchange(code, redirect_uri).fetch("access_token")
         profile = Client.new(token: token).me
 
         @user.update!(
@@ -35,7 +35,7 @@ module Hackatime
     end
 
     def post(url, **params)
-        uri URI(url)
+        uri = URI(url)
         response = Net::HTTP.post_form(uri, params.merge(
             client_id: ENV.fetch("HACKATIME_CLIENT_ID"),
             client_secret: ENV.fetch("HACKATIME_CLIENT_SECRET")

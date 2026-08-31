@@ -1,9 +1,14 @@
 import type { FireState, HeatTier } from "@/types/camp";
 
 export const PLOTS = [
-	{ x: 25, y: 50 },
-	{ x: 40, y: 40 },
-	{ x: 65, y: 40 },
+	{ x: 29, y: 46 },
+	{ x: 62, y: 41 },
+	{ x: 13, y: 63 },
+	{ x: 78, y: 61 },
+	{ x: 40, y: 79 },
+	{ x: 68, y: 80 },
+	{ x: 45, y: 33 },
+	{ x: 89, y: 45 },
 ] as const;
 
 export const PLOT_COUNT = PLOTS.length;

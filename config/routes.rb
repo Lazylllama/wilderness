@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   get "dashboard", to: "dashboard#index"
   get "camp", to: "dashboard#index", as: :camp
+  get "shop", to: "shop#index"
+  get "ranger", to: "ranger#index"
   get "hackatime/connect", to: "hackatime_connections#create"
   get "hackatime/callback", to: "hackatime_connections#callback"
   delete "hackatime/disconnect", to: "hackatime_connections#destroy"
