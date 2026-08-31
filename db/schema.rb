@@ -86,6 +86,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_24_130000) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.text "access_token"
     t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
     t.string "email", null: false
@@ -100,12 +101,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_24_130000) do
     t.datetime "last_logged_at"
     t.string "last_name"
     t.string "name"
+    t.text "refresh_token"
+    t.datetime "rsvped_at"
     t.string "slack_id"
     t.integer "streak_days", default: 0, null: false
+    t.datetime "token_expires_at"
     t.datetime "updated_at", null: false
     t.string "verification_status"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["hc_uid"], name: "index_users_on_hc_uid", unique: true
+    t.index ["rsvped_at"], name: "index_users_on_rsvped_at"
   end
 
   add_foreign_key "log_transactions", "users"
