@@ -20,5 +20,19 @@ Very early-stage YSWS platform.
         nothing: true
     ```
 
+# deploy
+linux w/ domain:
+```sh
+git clone <this repo> && cd wilderness
+cp .env.production.example .env.production   # fill it in, the comments say how
+docker compose --env-file .env.production -f compose.prod.yml up -d --build
+```
+
+- update: `git pull` then the same `up -d --build`
+- logs: `docker compose -f compose.prod.yml logs -f app`
+- console: `docker compose -f compose.prod.yml exec app bin/rails console`
+
+alr running nginx/Caddy? see `compose.prod.yml`.
+
 # contributing
-- use `bin/lint` to lint
+- use `bin/lint` to lint :)
