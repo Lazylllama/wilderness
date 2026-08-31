@@ -1,6 +1,6 @@
 # Production deploy on a single Linux box:
-#   cp .env.production.example .env.production   # fill it in
-#   docker compose --env-file .env.production -f compose.prod.yml up -d --build
+#   cp .env.production.example .env   # fill it in
+#   docker compose -f compose.prod.yml up -d --build
 #
 # Thruster terminates TLS on 443 (Let's Encrypt cert for $TLS_DOMAIN, cached in
 # the storage volume) and proxies to Puma. Already have nginx/Caddy in front?
@@ -12,9 +12,9 @@ services:
     build: .
     restart: unless-stopped
     command: ["./bin/thrust", "./bin/rails", "server"]
-    env_file: .env.production
+    env_file: .env
     environment:
-      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env.production}@db:5432/wilderness_production
+      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@db:5432/wilderness_production
     ports:
       - "80:80"
       - "443:443"
@@ -28,7 +28,7 @@ services:
     image: postgres:17-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env.production}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
       POSTGRES_DB: wilderness_production
     volumes:
       - postgres_data:/var/lib/postgresql/data

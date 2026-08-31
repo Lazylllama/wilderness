@@ -24,8 +24,8 @@ Very early-stage YSWS platform.
 linux w/ domain:
 ```sh
 git clone <this repo> && cd wilderness
-cp .env.production.example .env.production   # fill it in, the comments say how
-docker compose --env-file .env.production -f compose.prod.yml up -d --build
+cp .env.production.example .env   # fill it in, the comments say how
+docker compose -f compose.prod.yml up -d --build
 ```
 
 - update: `git pull` then the same `up -d --build`
