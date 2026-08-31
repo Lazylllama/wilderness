@@ -1,5 +1,14 @@
 # wilderness
-wait.. what is this?
+Very early-stage YSWS platform.
+
+# Features
+- Landing page
+  - Release flipper
+  - Shop items form DB
+  - uhh falling snow
+  - very awesome buttons
+- [Figma design ](https://www.figma.com/design/6zIEr8D7Dbz9ZpEBS3gJHy/foresty-forest?node-id=0-1&t=cWC6XEYNkyK3rPly-1)
+- Hopes and prayers
 
 # dev
 - We use docker, if you dont want to use docker then you have to figure it out yourself. pretty much just run `docker compose run --rm --service-ports rails-app bin/setup` and everything should just work, you can then run `bin/setup` to setup everything else for you and start the app

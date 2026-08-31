@@ -1,8 +1,7 @@
-
 import { router, usePage } from "@inertiajs/react";
 import type { VariantProps } from "class-variance-authority";
 import { FlameKindling, MoveUpRight } from "lucide-react";
-import type { SharedProps } from "@/types";
+import { RsvpButton } from "@/components/auth-buttons";
 import {
 	HeatTierCards,
 	ShopPreview,
@@ -20,7 +19,7 @@ import { Trees } from "@/components/trees";
 import { Alert, type alertVariants } from "@/components/wilderness/alert";
 import { Button } from "@/components/wilderness/button";
 import { Card, CardContent } from "@/components/wilderness/card";
-import { RsvpButton } from "@/components/auth-buttons";
+import type { SharedProps } from "@/types";
 
 export default function LandingPage({
 	release_flipper = false,
@@ -77,21 +76,21 @@ export default function LandingPage({
 							</p>
 							{!user ? (
 								<div className="flex flex-col gap-2 w-fit">
-									<RsvpButton>
-										RSVP <FlameKindling size={20} strokeWidth={3}/>
+									<RsvpButton className={"w-min"}>
+										RSVP <FlameKindling size={20} strokeWidth={3} />
 									</RsvpButton>
 									<span className="text-sm text-foreground/50 font-serif italic">
-										just one click — we use your hack club account
+										no emails cause we use your hack club account :)
 									</span>
 								</div>
-							):user.camp_access? (
+							) : user.camp_access ? (
 								<Button onClick={() => router.visit("/camp")} className="w-fit">
-									enter camp <MoveUpRight size={20} strokeWidth={3}/>
+									enter camp <MoveUpRight size={20} strokeWidth={3} />
 								</Button>
-							): (
+							) : (
 								<div className="flex flex-col gap-2 w-fit">
 									<span className="font-semibold text-secondary">
-										you&rsquo;re on the list, {user.name} ✓
+										you&rsquo;re on the list ✓
 									</span>
 									<span className="text-sm text-foreground/50 font-serif italic">
 										{rsvp_count} users signed up so far

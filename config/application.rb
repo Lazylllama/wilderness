@@ -22,6 +22,13 @@ module Wilderness
     # in config/environments, which are processed later.
     #
     config.time_zone = "Central Time (US & Canada)"
+
+    # Active Record encryption keys come from ENV everywhere; dev/test fall back
+    # to throwaway values so a fresh checkout boots without extra setup.
+    local = Rails.env.local?
+    config.active_record.encryption.primary_key = ENV.fetch("AR_ENCRYPTION_PRIMARY_KEY", local ? "dev primary key" : nil)
+    config.active_record.encryption.deterministic_key = ENV.fetch("AR_ENCRYPTION_DETERMINISTIC_KEY", local ? "dev deterministic key" : nil)
+    config.active_record.encryption.key_derivation_salt = ENV.fetch("AR_ENCRYPTION_KEY_DERIVATION_SALT", local ? "dev key derivation salt" : nil)
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end

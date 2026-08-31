@@ -11,7 +11,7 @@ class SessionController < ApplicationController
 
         else
             redirect_to root_path, notice: {
-                title: "you're in, #{user.display_name}",
+                title: "you're in",
                 description: "Keep an eye out when the wilderness opens...",
                 iconName: "Tent",
                 variant: "normal"
