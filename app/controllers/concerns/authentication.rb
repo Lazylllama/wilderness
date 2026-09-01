@@ -34,6 +34,11 @@ module Authentication
     redirect_to root_path, alert: "set up your tent first!"
   end
 
+  def require_admin
+    return if current_user&.admin?
+    redirect_to root_path, alert: "nothing to see here!"
+  end
+
   def require_camp_access
     return if camp_access?
     redirect_to root_path, notice: {
