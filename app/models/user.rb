@@ -41,6 +41,8 @@ class User < ApplicationRecord
     slack_id.presence||email
   end
 
+  def shop_region = Region.normalize(region)
+
   encrypts :hackatime_access_token
   def hackatime_connected? = hackatime_access_token.present?
 
