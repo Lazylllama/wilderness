@@ -5,8 +5,11 @@ import { formatLogs } from "@/lib/camp-layout";
 type ShopItem = {
 	id: number;
 	title: string | null;
-	price: number | null;
+	description: string | null;
+	kind: string;
 	image_url: string | null;
+	logs: number;
+	sold_out: boolean;
 };
 
 export default function ShopIndex({
@@ -46,7 +49,8 @@ export default function ShopIndex({
 				) : (
 					<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 						{items.map((item) => {
-							const affordable = (item.price ?? 0) <= logs_balance;
+							const affordable = item.logs <= logs_balance;
+							const dim = item.sold_out || !affordable;
 							return (
 								<div
 									key={item.id}
@@ -60,15 +64,20 @@ export default function ShopIndex({
 										/>
 									)}
 									<span className="font-semibold">{item.title}</span>
+									{item.description && (
+										<span className="font-serif text-sm text-foreground/50">
+											{item.description}
+										</span>
+									)}
 									<span
 										className={
-											affordable
-												? "text-sm font-semibold text-primary"
-												: "text-sm font-semibold text-foreground/40"
+											dim? "text-sm font-semibold text-foreground/40"
+												: "text-sm font-semibold text-primary"
 										}
 									>
-										🪵 {formatLogs(item.price ?? 0)}
-										{!affordable && " · not enough logs"}
+										🪵 {formatLogs(item.logs)}
+										{item.sold_out && " · sold out"}
+										{!item.sold_out && !affordable && " · not enough logs"}
 									</span>
 								</div>
 							);

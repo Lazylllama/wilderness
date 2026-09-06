@@ -30,6 +30,10 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "overview#index"
     get "users", to: "users#index"
+    get "shop", to: "shop#index"
+    post "shop", to: "shop#create"
+    patch "shop/:id", to: "shop#update", as: :shop_item
+    delete "shop/:id", to: "shop#destroy"
     patch "users/:id", to: "users#update", as: :user
     get "projects", to: "projects#index"
     get "flags", to: "flags#index"

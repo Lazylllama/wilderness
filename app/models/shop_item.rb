@@ -9,6 +9,7 @@ class ShopItem < ApplicationRecord
     scope :on_shelf, ->{where(stocked: true).order(:position, :id)}
 
     def unlimited? = stock_remaining.nil?
+    def sold_out? = !unlimited? && stock_remaining.zero?
 
     def logs_for(region)
         by_region = prices.index_by(&:region)
