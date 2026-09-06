@@ -4,6 +4,7 @@ import {
 	Flame,
 	LayoutDashboard,
 	type LucideIcon,
+	Package,
 	Shield,
 	Tent,
 	Users,
@@ -14,6 +15,7 @@ const TABS: { href: string; label: string; icon: LucideIcon }[] = [
 	{ href: "/admin", label: "overview", icon: LayoutDashboard },
 	{ href: "/admin/users", label: "campers", icon: Users },
 	{ href: "/admin/projects", label: "projects", icon: Tent },
+	{ href: "/admin/shop", label: "shop", icon: Package },
 	{ href: "/admin/flags", label: "flipper", icon: Flame },
 ];
 

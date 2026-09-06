@@ -3,9 +3,10 @@ module Admin
     before_action :set_item, only: %i[update destroy]
 
   def index
-    render inertia: "shop/index", props: {
+    render inertia: "admin/shop", props: {
       items: ShopItem.includes(:prices).order(:position, :id).map {|item| item_props(item)},
       regions: Region::ALL.map {|code, label| {code: code, label: label }},
+      kinds: ShopItem::KINDS,
       totals: {
         items: ShopItem.count,
         stocked: ShopItem.where(stocked: true).count,
