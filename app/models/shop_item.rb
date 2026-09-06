@@ -4,9 +4,9 @@ class ShopItem < ApplicationRecord
     has_many :prices, class_name: "ShopItemPrice", dependent: :destroy
 
     validates :title, presence: true
-    validates :kind, inclusion: {in: KINDS}
+    validates :kind, inclusion: { in: KINDS }
 
-    scope :on_shelf, ->{where(stocked: true).order(:position, :id)}
+    scope :on_shelf, -> { where(stocked: true).order(:position, :id) }
 
     def unlimited? = stock_remaining.nil?
     def sold_out? = !unlimited? && stock_remaining.zero?
@@ -24,5 +24,4 @@ class ShopItem < ApplicationRecord
 
         ShopItem.where(id: id).where("stock_remaining > 0").update_all("stock_remaining = stock_remaining - 1") == 1
     end
-
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_24_130000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_03_200200) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -57,12 +57,27 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_24_130000) do
     t.index ["tent_id"], name: "index_ship_submissions_one_pending_per_tent", unique: true, where: "((status)::text = 'pending'::text)"
   end
 
+  create_table "shop_item_prices", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "logs", null: false
+    t.string "region", null: false
+    t.bigint "shop_item_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shop_item_id", "region"], name: "index_shop_item_prices_on_item_and_region", unique: true
+  end
+
   create_table "shop_items", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.text "description"
     t.text "image_url"
+    t.string "kind", default: "gear", null: false
+    t.integer "position", default: 0, null: false
     t.integer "price"
+    t.integer "stock_remaining"
+    t.boolean "stocked", default: false, null: false
     t.string "title"
     t.datetime "updated_at", null: false
+    t.index ["stocked", "position"], name: "index_shop_items_on_stocked_and_position"
   end
 
   create_table "tents", force: :cascade do |t|
@@ -102,6 +117,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_24_130000) do
     t.string "last_name"
     t.string "name"
     t.text "refresh_token"
+    t.string "region"
     t.datetime "rsvped_at"
     t.string "slack_id"
     t.integer "streak_days", default: 0, null: false
@@ -116,5 +132,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_24_130000) do
   add_foreign_key "log_transactions", "users"
   add_foreign_key "ship_submissions", "tents"
   add_foreign_key "ship_submissions", "users", column: "reviewer_id"
+  add_foreign_key "shop_item_prices", "shop_items"
   add_foreign_key "tents", "users"
 end

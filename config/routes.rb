@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     get "shop", to: "shop#index"
     post "shop", to: "shop#create"
     patch "shop/:id", to: "shop#update", as: :shop_item
-    delete "shop/:id", to: "shop#destroy"
+    delete "shop/:id", to: "shop#destroy", as: :remove_shop_item
     patch "users/:id", to: "users#update", as: :user
     get "projects", to: "projects#index"
     get "flags", to: "flags#index"

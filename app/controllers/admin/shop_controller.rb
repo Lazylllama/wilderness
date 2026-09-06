@@ -4,8 +4,8 @@ module Admin
 
   def index
     render inertia: "admin/shop", props: {
-      items: ShopItem.includes(:prices).order(:position, :id).map {|item| item_props(item)},
-      regions: Region::ALL.map {|code, label| {code: code, label: label }},
+      items: ShopItem.includes(:prices).order(:position, :id).map { |item| item_props(item) },
+      regions: Region::ALL.map { |code, label| { code: code, label: label } },
       kinds: ShopItem::KINDS,
       totals: {
         items: ShopItem.count,
@@ -22,7 +22,7 @@ module Admin
       sync_prices(item)
       redirect_to admin_shop_path, notice: "#{item.title} is now available for all users"
     else
-      redirect_to admin_shop_path, inertia: {errors: item.errors}
+      redirect_to admin_shop_path, inertia: { errors: item.errors }
     end
   end
 
@@ -31,7 +31,7 @@ module Admin
       sync_prices(@item)
       redirect_to admin_shop_path, notice: "#{@item.title} updated"
     else
-      redirect_to admin_shop_path, inertia: {errors: @item.errors}
+      redirect_to admin_shop_path, inertia: { errors: @item.errors }
     end
   end
 
@@ -77,8 +77,8 @@ module Admin
       position: item.position,
       sold_out: item.sold_out?,
       default_price: item.price,
-      prices: item.prices.to_h {|price| [price.region, price.logs]}
+      prices: item.prices.to_h { |price| [ price.region, price.logs ] }
     }
   end
   end
-  end
+end
