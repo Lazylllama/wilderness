@@ -19,7 +19,16 @@ class ShopController < InertiaController
         end
         render inertia: "shop/index", props: {
             items: items,
-            logs_balance: current_user.logs_balance
+            logs_balance: current_user.logs_balance,
+            region: region,
+            regions: Region::ALL.map {|code, label| {code: code, label: label}}
         }
+    end
+
+    def region
+        code = params[:region].to_s
+        return redirect_to shop_path, notice: "unsupported region :(" unless Region.codes.include?(code)
+        current_user.update!(region: code)
+        redirect_to shop_path, notice: "prices now shown for #{Region.label(code)}"
     end
 end

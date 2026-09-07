@@ -1,4 +1,4 @@
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import { ArrowLeft } from "lucide-react";
 import { formatLogs } from "@/lib/camp-layout";
 
@@ -15,9 +15,13 @@ type ShopItem = {
 export default function ShopIndex({
 	items,
 	logs_balance,
+	region,
+	regions,
 }: {
 	items: ShopItem[];
 	logs_balance: number;
+	region: string;
+	regions: {code: string; label: string}[];
 }) {
 	return (
 		<div className="min-h-dvh bg-linear-to-b from-night-blue to-background">
@@ -30,14 +34,21 @@ export default function ShopIndex({
 						</p>
 					</div>
 					<div className="flex items-center gap-4">
+						<select value={region} onChange={(event) => router.patch("/shop/region", {region: event.target.value}, {preserveScroll: true},)}
+							className="rounded-full border border-border bg-card px-3 py-1.5 text-sm font-semibold text-foreground">
+							{regions.map((option) => (
+								<option key={option.code} value={option.code}>
+									shipping to {option.label}
+								</option>
+							))}
+						</select>
 						<span className="whitespace-nowrap rounded-full border border-pill-border bg-pill-background px-3 py-1.5 text-sm font-semibold text-pill-foreground">
 							🪵 {formatLogs(logs_balance)}
 						</span>
 						<Link
 							href="/camp"
-							className="flex items-center gap-2 font-serif text-lg italic text-foreground/60 transition-colors hover:text-foreground"
-						>
-							<ArrowLeft size={20} strokeWidth={3} /> back to camp
+							className="flex items-center gap-2 font-serif text-lg italic text-foreground/60 transition-colors hover:text-foreground">
+							<ArrowLeft size={20} strokeWidth={3}/> back to camp
 						</Link>
 					</div>
 				</div>

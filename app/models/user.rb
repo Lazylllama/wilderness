@@ -42,6 +42,7 @@ class User < ApplicationRecord
   end
 
   def shop_region = Region.normalize(region)
+  validates :region, inclusion: {in: Region.codes}, allow_nil: true
 
   encrypts :hackatime_access_token
   def hackatime_connected? = hackatime_access_token.present?
