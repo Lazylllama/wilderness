@@ -6,4 +6,6 @@ class LogTransaction < ApplicationRecord
 
     validates :source, inclusion: { in: SOURCES }
     validates :amount, numericality: { only_integer: true }
+    scope :recent, -> {order(created_at: :desc)}
+    scope :grants, -> {where(source: "adjustment")}
 end

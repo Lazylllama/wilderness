@@ -1,6 +1,7 @@
 import { Link, router, usePage } from "@inertiajs/react";
 import {
 	ArrowLeft,
+	Coins,
 	Flame,
 	LayoutDashboard,
 	type LucideIcon,
@@ -16,6 +17,7 @@ const TABS: { href: string; label: string; icon: LucideIcon }[] = [
 	{ href: "/admin/users", label: "campers", icon: Users },
 	{ href: "/admin/projects", label: "projects", icon: Tent },
 	{ href: "/admin/shop", label: "shop", icon: Package },
+	{ href: "/admin/logs", label: "logs", icon: Coins },
 	{ href: "/admin/flags", label: "flipper", icon: Flame },
 ];
 

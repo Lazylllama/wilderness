@@ -39,6 +39,8 @@ Rails.application.routes.draw do
     get "projects", to: "projects#index"
     get "flags", to: "flags#index"
     patch "flags/:name", to: "flags#update", as: :flag
+    get "logs", to: "logs#index"
+    post "logs", to: "logs#create"
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
