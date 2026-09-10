@@ -1,5 +1,5 @@
-import {router} from "@inertiajs/react";
-import {Search} from "lucide-react";
+import {Link,router} from "@inertiajs/react";
+import {Eye, Search} from "lucide-react";
 import {useState} from "react";
 import {AdminShell, AdminTable, Tag} from "@/components/admin/shell";
 import {Button} from "@/components/wilderness/button";
@@ -57,7 +57,8 @@ export default function AdminUsers({
 						"verified",
 						"rsvped",
 						"tents",
-                        "role"
+                        "role",
+                        ""
                 ]}>
                     {users.length === 0 && (
 						<tr>
@@ -73,7 +74,7 @@ export default function AdminUsers({
                         <tr key={user.id}>
                             <td className="px-4 py-3">
                                 <div className="flex flex-col">
-                                    <span className="font-semibold">{user.name}
+                                    <span className="font-semibold">
                                         {user.name}
                                     </span>
                                     <span className="font-serif text-sm text-foreground/50">
@@ -93,8 +94,16 @@ export default function AdminUsers({
                             <td className="px-4 py-3 text-sm">{user.tents_count}</td>
                             <td className="px-4 py-3">
                                 <button type="button" onClick={() => toggleField(user, "admin")}>
-                                    <Tag on={user.admin} onLabel="ranger" offLabel="—"/>
+                                    <Tag on={user.admin} onLabel="admin" offLabel="—"/>
                                 </button>
+                            </td>
+                            <td className="px-4 py-3">
+                                <Button
+                                    variant="outline"
+                                    className="px-3 py-1.5 text-sm"
+                                    onClick={() => router.visit(`/admin/users/${user.id}`)}>
+                                    <Eye size={16} strokeWidth={2.5}/>View
+                                </Button>
                             </td>
                         </tr>
                     ))}

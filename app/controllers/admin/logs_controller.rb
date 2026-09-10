@@ -2,7 +2,15 @@ module Admin
   class LogsController < BaseController
     def index
         render inertia "admin/logs", props: {
-            campers: User.order(:email).limit(200).map {|user| camper_props(user)},
+            transactions: scoped_transactions.map {|entry| entry_props(entry)},
+            totals: {
+                circulating: LogTransaction.sum(:amount),
+                granted: LogTransaction.grants.where("amount > 0").sum(:amount),
+                spent: -LogTransaction.where("amount < 0").sum(:amount)
+            },
+            source: params[:source].to_s,
+            sources: LogTransaction::SOURCES,
+            flash_notice: flash_notice
         }
     end
 
@@ -21,21 +29,18 @@ module Admin
         notice: "#{verb} #{amount.abs} logs #{amount.positive? ? 'to':'from'} #{user.display_name}"
     end
     private
+    def scoped_transactions
+        scope = LogTransaction.includes(:user).recent.limit(100)
+        LogTransaction::SOURCES.include?(params[:source])? scope.where(source: params[:source]): scope
+    end
     def balances
         @balances ||= LogTransaction.group(:user_id).sum(:amount)
-    end
-
-    def camper_props(user){
-        id: user.id,
-        name: user.display_name,
-        email: user.email,
-        balance: balances.fetch(user.id, 0)
-    }
     end
 
     def entry_props(entry)
     {
         id: entry.id,
+        user_id: entry.user_id,
         user: entry.user.display_name,
         email: entry.user.email,
         amount: entry.amount,

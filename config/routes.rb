@@ -31,6 +31,10 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: "overview#index"
     get "users", to: "users#index"
+    get "users/:id", to: "users#show", as: :user
+    patch "users/:id", to: "users#update"
+    post "users/:id/logs", to: "logs#create", as: :user_logs
+    get "logs", to: "logs#index"
     get "shop", to: "shop#index"
     post "shop", to: "shop#create"
     patch "shop/:id", to: "shop#update", as: :shop_item
@@ -38,9 +42,6 @@ Rails.application.routes.draw do
     patch "users/:id", to: "users#update", as: :user
     get "projects", to: "projects#index"
     get "flags", to: "flags#index"
-    patch "flags/:name", to: "flags#update", as: :flag
-    get "logs", to: "logs#index"
-    post "logs", to: "logs#create"
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
