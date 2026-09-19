@@ -1,8 +1,8 @@
-import { Link, router, usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import {
 	ArrowLeft,
 	Coins,
-	Flame,
+	Flag,
 	LayoutDashboard,
 	type LucideIcon,
 	Package,
@@ -10,15 +10,17 @@ import {
 	Tent,
 	Users,
 } from "lucide-react";
+import { Children } from "react";
+import { Card, CardContent } from "@/components/wilderness/card";
 import { cn } from "@/lib/utils";
 
 const TABS: { href: string; label: string; icon: LucideIcon }[] = [
-	{ href: "/admin", label: "overview", icon: LayoutDashboard },
-	{ href: "/admin/users", label: "campers", icon: Users },
-	{ href: "/admin/projects", label: "projects", icon: Tent },
-	{ href: "/admin/shop", label: "shop", icon: Package },
-	{ href: "/admin/logs", label: "logs", icon: Coins },
-	{ href: "/admin/flags", label: "flipper", icon: Flame },
+	{ href: "/admin", label: "Overview", icon: LayoutDashboard },
+	{ href: "/admin/users", label: "Users", icon: Users },
+	{ href: "/admin/projects", label: "Projects", icon: Tent },
+	{ href: "/admin/shop", label: "Shop", icon: Package },
+	{ href: "/admin/logs", label: "Logs", icon: Coins },
+	{ href: "/admin/flags", label: "Feature flags", icon: Flag },
 ];
 
 export function AdminShell({
@@ -42,17 +44,16 @@ export function AdminShell({
 					<div className="flex flex-col gap-1">
 						<h1 className="text-4xl font-bold flex items-center gap-3">
 							<Shield className="text-primary" size={32} strokeWidth={2.67} />
-							dashboard
+							Admin
 						</h1>
 						<p className="text-foreground/60 font-serif italic">{subtitle}</p>
 					</div>
-					<button
-						type="button"
-						onClick={() => router.visit("/")}
-						className="flex items-center gap-2 text-foreground/60 hover:text-foreground font-serif italic text-lg transition-colors cursor-pointer"
+					<Link
+						href="/"
+						className="flex items-center gap-2 text-foreground/60 hover:text-foreground font-serif italic text-lg transition-colors"
 					>
-						<ArrowLeft size={20} strokeWidth={3} /> back to the trailhead
-					</button>
+						<ArrowLeft size={20} strokeWidth={3} /> Back to site
+					</Link>
 				</div>
 
 				<div className="flex flex-row gap-1 border-b border-border">
@@ -117,11 +118,35 @@ export function Tag({
 	);
 }
 
+export function StatCard({
+	label,
+	value,
+	icon: Icon,
+}: {
+	label: string;
+	value: React.ReactNode;
+	icon?: LucideIcon;
+}) {
+	return (
+		<Card>
+			<CardContent className="flex flex-col gap-1 p-5">
+				<span className="flex items-center gap-2 font-serif text-sm text-foreground/50">
+					{Icon && <Icon size={16} strokeWidth={3} />}
+					{label}
+				</span>
+				<span className="text-3xl font-bold text-primary">{value}</span>
+			</CardContent>
+		</Card>
+	);
+}
+
 export function AdminTable({
 	headers,
+	empty,
 	children,
 }: {
 	headers: string[];
+	empty: string;
 	children: React.ReactNode;
 }) {
 	return (
@@ -139,7 +164,20 @@ export function AdminTable({
 						))}
 					</tr>
 				</thead>
-				<tbody>{children}</tbody>
+				<tbody>
+					{Children.count(children) === 0 ? (
+						<tr>
+							<td
+								colSpan={headers.length}
+								className="px-4 py-8 text-center font-serif italic text-foreground/50"
+							>
+								{empty}
+							</td>
+						</tr>
+					) : (
+						children
+					)}
+				</tbody>
 			</table>
 		</div>
 	);
