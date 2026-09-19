@@ -33,15 +33,15 @@ Rails.application.routes.draw do
     get "users", to: "users#index"
     get "users/:id", to: "users#show", as: :user
     patch "users/:id", to: "users#update"
-    post "users/:id/logs", to: "logs#create", as: :user_logs
+    post "users/:user_id/logs", to: "logs#create", as: :user_logs
     get "logs", to: "logs#index"
+    get "projects", to: "projects#index"
     get "shop", to: "shop#index"
     post "shop", to: "shop#create"
     patch "shop/:id", to: "shop#update", as: :shop_item
     delete "shop/:id", to: "shop#destroy", as: :remove_shop_item
-    patch "users/:id", to: "users#update", as: :user
-    get "projects", to: "projects#index"
     get "flags", to: "flags#index"
+    patch "flags/:name", to: "flags#update", as: :flag
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
