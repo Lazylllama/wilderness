@@ -31,7 +31,7 @@ export function Navbar({
 					/>
 					<NavbarButton
 						name="the tiers"
-						onClick={() => ScrollToSection("project-heat-tiers")}
+						onClick={() => ScrollToSection("project-tiers")}
 					/>
 					<NavbarButton
 						name="shop"

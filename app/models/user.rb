@@ -35,7 +35,7 @@ class User < ApplicationRecord
     name.presence || first_name.presence|| email.split("@").first
   end
 
-  has_many :tents, dependent: :destroy
+  has_many :projects, dependent: :destroy
 
   def hackatime_identifier
     slack_id.presence||email
@@ -53,7 +53,7 @@ class User < ApplicationRecord
   end
 
   def fire_state
-    hours = tents.sum(&:hours)
+    hours = projects.sum(&:hours)
     case hours
     when 0...5 then "embers"
     when 5...20 then "smoldering"

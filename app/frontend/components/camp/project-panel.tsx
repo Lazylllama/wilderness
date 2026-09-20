@@ -8,40 +8,40 @@ import { Label } from "@/components/wilderness/label";
 import {
 	formatHours,
 	formatLogs,
-	HEAT_TIERS,
 	logsFor,
+	PROJECT_TIERS,
 	relativeTime,
 	tierForHours,
 } from "@/lib/camp-layout";
-import type { HackatimeProject, Tent } from "@/types/camp";
+import type { HackatimeProject, Project } from "@/types/camp";
 import { TentArt } from "./art";
 import { HackatimePicker } from "./hackatime-picker";
 
 const SHIP_MINIMUM_HOURS = 1;
-type TentPanel = {
-	tent: Tent | null;
+type ProjectPanel = {
+	project: Project | null;
 	plotIndex: number | null;
 	projects: HackatimeProject[];
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 };
 
-export function TentPanel({
-	tent,
+export function ProjectPanel({
+	project,
 	plotIndex,
 	projects,
 	open,
 	onOpenChange,
-}: TentPanel) {
+}: ProjectPanel) {
 	return (
 		<Dialog.Root open={open} onOpenChange={onOpenChange}>
 			<Dialog.Portal>
 				<Dialog.Backdrop className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" />
 				<Dialog.Popup className="fixed left-1/2 top-1/2 z-50 max-h-[90dvh] w-[min(42rem,92vw)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-border bg-card p-6">
 					{open && (
-						<TentPanelBody
-							key={tent?.id ?? `new-${plotIndex}`}
-							tent={tent}
+						<ProjectPanelBody
+							key={project?.id ?? `new-${plotIndex}`}
+							project={project}
 							plotIndex={plotIndex}
 							projects={projects}
 							onClose={() => onOpenChange(false)}
@@ -53,39 +53,39 @@ export function TentPanel({
 	);
 }
 
-function TentPanelBody({
-	tent,
+function ProjectPanelBody({
+	project,
 	plotIndex,
 	projects,
 	onClose,
 }: {
-	tent: Tent | null;
+	project: Project | null;
 	plotIndex: number | null;
 	projects: HackatimeProject[];
 	onClose: () => void;
 }) {
-	const isNew = tent === null;
+	const isNew = project === null;
 	const [syncing, setSyncing] = useState(false);
 	const form = useForm({
-		name: tent?.name ?? "",
-		description: tent?.description ?? "",
-		repo_url: tent?.repo_url ?? "",
-		demo_url: tent?.demo_url ?? "",
-		hackatime_projects: tent?.hackatime_projects ?? ([] as string[]),
-		plot_index: tent?.plot_index ?? plotIndex ?? 0,
+		name: project?.name ?? "",
+		description: project?.description ?? "",
+		repo_url: project?.repo_url ?? "",
+		demo_url: project?.demo_url ?? "",
+		hackatime_projects: project?.hackatime_projects ?? ([] as string[]),
+		plot_index: project?.plot_index ?? plotIndex ?? 0,
 	});
 
 	const previewHours =
 		projects
 			.filter((p) => form.data.hackatime_projects.includes(p.name))
 			.reduce((sum, p) => sum + p.total_seconds, 0) / 3600;
-	const hours = isNew ? previewHours : tent.hours;
-	const heatTier = isNew ? tierForHours(hours) : tent.heat_tier;
-	const tier = HEAT_TIERS[heatTier];
+	const hours = isNew ? previewHours : project.hours;
+	const projectTier = isNew ? tierForHours(hours) : project.project_tier;
+	const tier = PROJECT_TIERS[projectTier];
 
-	const logs = isNew ? logsFor(hours, heatTier) : tent.logs;
+	const logs = isNew ? logsFor(hours, projectTier) : project.logs;
 	const canShip =
-		!isNew && tent.status === "pitched" && hours >= SHIP_MINIMUM_HOURS;
+		!isNew && project.status === "pitched" && hours >= SHIP_MINIMUM_HOURS;
 
 	function toggleProject(name: string) {
 		const current = form.data.hackatime_projects;
@@ -100,7 +100,7 @@ function TentPanelBody({
 	function resync() {
 		setSyncing(true);
 		router.post(
-			"/tents/sync",
+			"/projects/sync",
 			{},
 			{
 				preserveScroll: true,
@@ -112,12 +112,12 @@ function TentPanelBody({
 	function submit(event: React.FormEvent) {
 		event.preventDefault();
 		const options = { preserveScroll: true, onSuccess: onClose };
-		if (isNew) form.post("/tents", options);
-		else form.patch(`/tents/${tent.id}`, options);
+		if (isNew) form.post("/projects", options);
+		else form.patch(`/projects/${project.id}`, options);
 	}
 	function ship() {
-		if (!tent) return;
-		router.post(`/tents/${tent.id}/ship`, {}, { onSuccess: onClose });
+		if (!project) return;
+		router.post(`/projects/${project.id}/ship`, {}, { onSuccess: onClose });
 	}
 
 	return (
@@ -126,7 +126,7 @@ function TentPanelBody({
 				<TentArt flag={tier.flag} className="w-20 shrink-0" />
 				<div>
 					<Dialog.Title className="text-2xl font-semibold">
-						{isNew ? "pitch a new tent" : tent.name}
+						{isNew ? "pitch a new tent" : project.name}
 					</Dialog.Title>
 					<div>
 						<span>
@@ -134,7 +134,7 @@ function TentPanelBody({
 						</span>
 
 						{!isNew && (
-							<span>synced {relativeTime(tent.hackatime_synced_at)}</span>
+							<span>synced {relativeTime(project.hackatime_synced_at)}</span>
 						)}
 					</div>
 					<Dialog.Description className="font-serif text-sm text-foreground/67">
@@ -226,7 +226,7 @@ function TentPanelBody({
 					</Button>
 				)}
 
-				{!isNew && !canShip && tent.status === "pitched" && (
+				{!isNew && !canShip && project.status === "pitched" && (
 					<span>
 						{formatHours(Math.max(0, SHIP_MINIMUM_HOURS - hours))} until you can
 						ship

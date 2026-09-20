@@ -2,13 +2,13 @@ import {Link, router, useForm} from "@inertiajs/react";
 import {ArrowLeft} from "lucide-react";
 import {AdminShell, AdminTable, StatCard, Tag} from "@/components/admin/shell";
 import {LOG_SOURCE_LABELS, LogAmount, type LogEntry} from "@/components/admin/logs";
-import {HeatTierLabel, ProjectLinks, ProjectStatus} from "@/components/admin/projects";
+import {ProjectLinks, ProjectStatus, ProjectTierLabel} from "@/components/admin/projects";
 import {Button} from "@/components/wilderness/button";
 import {Card, CardContent} from "@/components/wilderness/card";
 import {Input} from "@/components/wilderness/input";
 import {Label} from "@/components/wilderness/label";
 import {formatLogs, relativeTime} from "@/lib/camp-layout";
-import type {HeatTier} from "@/types/camp";
+import type {ProjectTier} from "@/types/camp";
 type User = {
 	id: number;
 	name: string;
@@ -30,7 +30,7 @@ type UserProject = {
 	name: string;
 	status: string;
 	hours: number;
-	heat_tier: HeatTier;
+	project_tier: ProjectTier;
 	repo_url: string | null;
 	demo_url: string | null;
 };
@@ -42,12 +42,12 @@ const SOURCE_LABELS: Record<string, string> = {
 };
 export default function AdminUser({
     camper,
-	tents,
+	projects,
 	transactions,
 	flash_notice,
 }:{
     camper: Camper;
-	tents: CamperProject[];
+	projects: CamperProject[];
 	transactions: Entry[];
 	flash_notice: string | null;
 }) {
@@ -89,7 +89,7 @@ export default function AdminUser({
 
                     <div className="grid grid-cols-4 gap-4">
 					<Stat label="Logs" value={`🪵 ${formatLogs(camper.balance)}`}/>
-					<Stat label="Tents" value={String(camper.tents_count)}/>
+					<Stat label="Projects" value={String(camper.projects_count)}/>
 					<Stat label="Streak" value={`${camper.streak}d`}/>
 					<Stat label="Fire" value={camper.fire_state}/>
 				</div>
@@ -144,18 +144,18 @@ export default function AdminUser({
 				<section className="flex flex-col gap-2">
 					<h3 className="text-lg font-bold">Projects</h3>
 					<AdminTable headers={["Project", "Status", "Hours", "Tier", "Links"]} empty="This user has no projects.">
-						{tents.map((tent) => (
-							<tr key={tent.id} className="border-t border-border align-top">
-								<td className="px-4 py-3 font-semibold">{tent.name}</td>
+						{projects.map((project) => (
+							<tr key={project.id} className="border-t border-border align-top">
+								<td className="px-4 py-3 font-semibold">{project.name}</td>
 								<td className="px-4 py-3">
-									<ProjectStatus status={tent.status}/>
+									<ProjectStatus status={project.status}/>
 								</td>
-								<td className="whitespace-nowrap px-4 py-3 font-semibold text-primary">{tent.hours}h</td>
+								<td className="whitespace-nowrap px-4 py-3 font-semibold text-primary">{project.hours}h</td>
 								<td className="px-4 py-3">
-									<HeatTierLabel tier={tent.heat_tier}/>
+									<ProjectTierLabel tier={project.project_tier}/>
 								</td>
 								<td className="px-4 py-3">
-									<ProjectLinks repoUrl={tent.repo_url} demoUrl={tent.demo_url}/>
+									<ProjectLinks repoUrl={project.repo_url} demoUrl={project.demo_url}/>
 								</td>
 							</tr>
 						))}

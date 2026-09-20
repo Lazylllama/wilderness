@@ -6,9 +6,9 @@ module Admin
           rsvps: User.rsvped.count,
           with_access: User.select { |user| access?(user) }.size,
           admins: User.where(admin: true).count,
-          tents: Tent.count,
-          shipped: Tent.where(status: "shipped").count,
-          hours: (Tent.sum(:hackatime_seconds).to_f / 3600).round
+          projects: Project.count,
+          shipped: Project.where(status: "shipped").count,
+          hours: (Project.sum(:hackatime_seconds).to_f / 3600).round
         },
         camp_open: camp_open?,
         recent: User.rsvped.order(rsvped_at: :desc).limit(8).map { |user|

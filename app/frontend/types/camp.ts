@@ -1,11 +1,11 @@
-export type HeatTier = "kindling" | "campfire" | "bonfire" | "wildfire";
+export type ProjectTier = "kindling" | "campfire" | "bonfire" | "wildfire";
 export type FireState =
 	| "embers"
 	| "smoldering"
 	| "crackling"
 	| "roaring"
 	| "blazing";
-export type TentStatus = 
+export type ProjectStatus = 
 	| "pitched"
 	| "submitted"
 	| "approved"
@@ -23,7 +23,7 @@ export type HackatimeProject = {
 	claimed_by: string | null;
 };
 
-export type Tent = {
+export type Project = {
 	id: number;
 	name: string;
 	description: string | null;
@@ -33,8 +33,8 @@ export type Tent = {
 	hackatime_projects: string[];
 	hours: number;
 	logs: number;
-	heat_tier: HeatTier;
-	status: TentStatus;
+	project_tier: ProjectTier;
+	status: ProjectStatus;
 	plot_index: number;
 	last_heartbeat_at: string | null;
 	hackatime_synced_at: string | null;
@@ -51,6 +51,6 @@ export type Camp = {
 
 export type CampPageProps = {
 	camp: Camp;
-	tents: Tent[];
+	projects: Project[];
 	hackatime_projects: HackatimeProject[];
 };

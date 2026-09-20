@@ -1,33 +1,33 @@
 import {
 	firelight,
 	formatHours,
-	HEAT_TIERS,
 	jitter,
 	plotFor,
+	PROJECT_TIERS,
 } from "@/lib/camp-layout";
 import { cn } from "@/lib/utils";
-import type { Tent } from "@/types/camp";
+import type { Project } from "@/types/camp";
 import { TentArt } from "./art";
 import { CampObject } from "./stage";
 
-export function CampTent({
-	tent,
+export function CampProject({
+	project,
 	onOpen,
 }: {
-	tent: Tent;
-	onOpen: (tent: Tent) => void;
+	project: Project;
+	onOpen: (project: Project) => void;
 }) {
-	const plot = plotFor(tent.plot_index);
-	const x = plot.x + jitter(tent.id);
-	const y = plot.y + jitter(tent.id + 99, 0.8);
-	const tier = HEAT_TIERS[tent.heat_tier];
+	const plot = plotFor(project.plot_index);
+	const x = plot.x + jitter(project.id);
+	const y = plot.y + jitter(project.id + 99, 0.8);
+	const tier = PROJECT_TIERS[project.project_tier];
 	const lit = 0.55 + firelight(x, y) * 0.45;
 	return (
 		<CampObject x={x} y={y}>
 			<button
 				type="button"
-				onClick={() => onOpen(tent)}
-				aria-label={`${tent.name}, ${formatHours(tent.hours)} logged, ${tier.label}`}
+				onClick={() => onOpen(project)}
+				aria-label={`${project.name}, ${formatHours(project.hours)} logged, ${tier.label}`}
 				className={cn(
 					"group flex w-[clamp(6.5rem,11vw,10rem)] cursor-pointer flex-col items-center",
 					"transition-transform duration-200 hover:-translate-y-1.5 focus-visible:-translate-y-1.5",
@@ -44,12 +44,12 @@ export function CampTent({
 					style={{ filter: `brightness(${lit})` }}
 				/>
 				<span className="mt-1 text-center text-sm/tight font-semibold text-foreground drop-shadow-[0_2px_3px_rgba(0,0,0,0.867)]">
-					{tent.name}
+					{project.name}
 				</span>
 				<span className="font-serif text-xs text-foreground/60">
-					{formatHours(tent.hours)} · {tier.label}
+					{formatHours(project.hours)} · {tier.label}
 				</span>
-				{tent.status === "shipped" && (
+				{project.status === "shipped" && (
 					<span className="mt-0.5 rounded-full border border-pill-border bg-pill-background px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-pill-foreground">
 						shipped
 					</span>

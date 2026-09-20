@@ -3,7 +3,7 @@ import type { VariantProps } from "class-variance-authority";
 import { FlameKindling, MoveUpRight } from "lucide-react";
 import { RsvpButton } from "@/components/auth-buttons";
 import {
-	HeatTierCards,
+	ProjectTierCards,
 	ShopPreview,
 	StepCards,
 } from "@/components/landing/cards";
@@ -138,12 +138,12 @@ export default function LandingPage({
 				</SectionWrapper>
 				<SectionWrapper>
 					<SectionHeading
-						id="project-heat-tiers"
+						id="project-tiers"
 						title="project heat tiers"
 						subtitle="the cooler the project, the better the payout"
 					/>
 					<SectionContent className="grid grid-cols-4 gap-4">
-						<HeatTierCards
+						<ProjectTierCards
 							baseHourRate={base_hour_rate}
 							hourMultipliers={hour_multipliers}
 						/>

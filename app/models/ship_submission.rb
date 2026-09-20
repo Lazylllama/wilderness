@@ -1,5 +1,5 @@
 class ShipSubmission < ApplicationRecord
-    belongs_to :tent
+    belongs_to :project
     belongs_to :reviewer, class_name: "User", optional: true
     has_one :log_transaction, as: :sourceable
 
@@ -7,7 +7,7 @@ class ShipSubmission < ApplicationRecord
     validates :status, inclusion: { in: STATUSES }
 
     def submitted_hours = submitted_seconds.to_f/3600
-    def payable_seconds = [ submitted_seconds - tent.paid_seconds, 0 ].max
+    def payable_seconds = [ submitted_seconds - project.paid_seconds, 0 ].max
     def payable_logs = (payable_seconds.to_f/3600* rate).round
 
     def approve!(reviewer:, notes: nil)
@@ -17,10 +17,10 @@ class ShipSubmission < ApplicationRecord
             awarded = payable_logs
 
             LogTransaction.create!(
-                user: tent.user, amount: awarded, source: "ship_submission", sourceable: self, memo: "#{tent.name} approved"
+                user: project.user, amount: awarded, source: "ship_submission", sourceable: self, memo: "#{project.name} approved"
             )
 
-            tent.update!(paid_seconds: submitted_seconds, status: "approved")
+            project.update!(paid_seconds: submitted_seconds, status: "approved")
 
             update!(status: "approved", reviewer: reviewer, review_notes: notes, reviewed_at: Time.current)
         end
@@ -32,7 +32,7 @@ class ShipSubmission < ApplicationRecord
     def request_changes!(reviewer:, notes:)
         return false
         transaction do
-            tent.update!(status: "changes_requested")
+            project.update!(status: "changes_requested")
             update!(status: "changes_requested", reviewer:, review_notes: notes, reviewed_at: Time.current)
         end
         true

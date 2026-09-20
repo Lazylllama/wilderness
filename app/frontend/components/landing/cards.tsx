@@ -58,8 +58,8 @@ function StepCard({ index }: { index: number }) {
 	);
 }
 
-//! heat tier cards for the landing page
-const heatTierVariants = cva("border", {
+//! project tier cards for the landing page
+const projectTierVariants = cva("border", {
 	variants: {
 		variant: {
 			kindling: "bg-card",
@@ -76,7 +76,7 @@ const heatTierVariants = cva("border", {
 	},
 });
 
-const heatTierDescriptions: Record<string, string> = {
+const projectTierDescriptions: Record<string, string> = {
 	kindling:
 		"a tiny spark, just like a flint a steel, something tiny, short and something.",
 	campfire:
@@ -87,7 +87,7 @@ const heatTierDescriptions: Record<string, string> = {
 		"a tiny spark, just like a flint a steel, something tiny, short and something.",
 };
 
-export function HeatTierCards({
+export function ProjectTierCards({
 	baseHourRate,
 	hourMultipliers,
 }: {
@@ -96,19 +96,19 @@ export function HeatTierCards({
 }) {
 	return (
 		<>
-			<HeatTierCard
+			<ProjectTierCard
 				variant="kindling"
 				hourRate={baseHourRate * (hourMultipliers?.kindling || 1)}
 			/>
-			<HeatTierCard
+			<ProjectTierCard
 				variant="campfire"
 				hourRate={baseHourRate * (hourMultipliers?.campfire || 1)}
 			/>
-			<HeatTierCard
+			<ProjectTierCard
 				variant="bonfire"
 				hourRate={baseHourRate * (hourMultipliers?.bonfire || 1)}
 			/>
-			<HeatTierCard
+			<ProjectTierCard
 				variant="wildfire"
 				hourRate={baseHourRate * (hourMultipliers?.wildfire || 1)}
 				isLast
@@ -117,14 +117,14 @@ export function HeatTierCards({
 	);
 }
 
-function HeatTierCard({
+function ProjectTierCard({
 	className,
 	variant = "kindling",
 	hourRate,
 	isLast = false,
 	...props
 }: React.ComponentProps<"div"> &
-	VariantProps<typeof heatTierVariants> & {
+	VariantProps<typeof projectTierVariants> & {
 		children?: React.ReactNode;
 		hourRate?: number;
 		isLast?: boolean;
@@ -132,7 +132,7 @@ function HeatTierCard({
 	return (
 		<Card
 			data-variant={variant}
-			className={cn(heatTierVariants({ variant, className }), "")}
+			className={cn(projectTierVariants({ variant, className }), "")}
 			{...props}
 		>
 			<CardContent className="text-center">
@@ -149,7 +149,7 @@ function HeatTierCard({
 					logs/hour
 				</p>
 				<p className="text-foreground/70 text-[13px]">
-					{heatTierDescriptions[variant || "kindling"]}
+					{projectTierDescriptions[variant || "kindling"]}
 				</p>
 				{isLast && <div className="" />}
 			</CardContent>

@@ -1,4 +1,4 @@
-class Tent < ApplicationRecord
+class Project < ApplicationRecord
     belongs_to :user
     has_many :ship_submissions, dependent: :destroy
 
@@ -16,9 +16,9 @@ class Tent < ApplicationRecord
     validates :repo_url, :demo_url, format: { with: %r{\Ahttps?://.*\z}, allow_blank: true, message: "must start with http" }
 
     def hours = hackatime_seconds.to_f/3600
-    def rate = TIERS.fetch(heat_tier).last
+    def rate = TIERS.fetch(project_tier).last
 
-    def heat_tier
+    def project_tier
         TIERS.select { |_, (minimum, _)| hours >= minimum }.keys.last||"kindling"
     end
     def logs_paid = (paid_seconds.to_f/3600 * rate).round
@@ -32,7 +32,7 @@ class Tent < ApplicationRecord
         transaction do
             ship_submissions.create!(
                 submitted_seconds: hackatime_seconds,
-                rate: rate, heat_tier: heat_tier,
+                rate: rate, project_tier: project_tier,
                 total_heartbeats: last_total_heartbeats
             )
             update!(status: "submitted")

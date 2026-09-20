@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   delete "hackatime/disconnect", to: "hackatime_connections#destroy"
 
 
-  resources :tents, except: [ :show, :destroy ] do
+  resources :projects, except: [ :show, :destroy ] do
     post :sync, on: :collection
     post :ship, on: :member
   end

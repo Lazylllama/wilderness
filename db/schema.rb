@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_03_200200) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_20_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -43,18 +43,38 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_03_200200) do
     t.index ["user_id"], name: "index_log_transactions_on_user_id"
   end
 
+  create_table "projects", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "demo_url"
+    t.text "description"
+    t.json "hackatime_projects", default: [], null: false
+    t.integer "hackatime_seconds", default: 0, null: false
+    t.datetime "hackatime_synced_at"
+    t.datetime "last_heartbeat_at"
+    t.string "name", null: false
+    t.integer "paid_seconds", default: 0, null: false
+    t.integer "plot_index"
+    t.string "repo_url"
+    t.datetime "shipped_at"
+    t.string "status", default: "pitched", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "plot_index"], name: "index_projects_on_user_id_and_plot_index", unique: true
+    t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
   create_table "ship_submissions", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.bigint "project_id", null: false
     t.text "review_notes"
     t.datetime "reviewed_at"
     t.bigint "reviewer_id"
     t.string "status", default: "pending", null: false
     t.integer "submitted_seconds", default: 0, null: false
-    t.bigint "tent_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_ship_submissions_on_project_id"
+    t.index ["project_id"], name: "index_ship_submissions_one_pending_per_project", unique: true, where: "((status)::text = 'pending'::text)"
     t.index ["reviewer_id"], name: "index_ship_submissions_on_reviewer_id"
-    t.index ["tent_id"], name: "index_ship_submissions_on_tent_id"
-    t.index ["tent_id"], name: "index_ship_submissions_one_pending_per_tent", unique: true, where: "((status)::text = 'pending'::text)"
   end
 
   create_table "shop_item_prices", force: :cascade do |t|
@@ -78,26 +98,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_03_200200) do
     t.string "title"
     t.datetime "updated_at", null: false
     t.index ["stocked", "position"], name: "index_shop_items_on_stocked_and_position"
-  end
-
-  create_table "tents", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "demo_url"
-    t.text "description"
-    t.json "hackatime_projects", default: [], null: false
-    t.integer "hackatime_seconds", default: 0, null: false
-    t.datetime "hackatime_synced_at"
-    t.datetime "last_heartbeat_at"
-    t.string "name", null: false
-    t.integer "paid_seconds", default: 0, null: false
-    t.integer "plot_index"
-    t.string "repo_url"
-    t.datetime "shipped_at"
-    t.string "status", default: "pitched", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id", "plot_index"], name: "index_tents_on_user_id_and_plot_index", unique: true
-    t.index ["user_id"], name: "index_tents_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -130,8 +130,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_03_200200) do
   end
 
   add_foreign_key "log_transactions", "users"
-  add_foreign_key "ship_submissions", "tents"
+  add_foreign_key "projects", "users"
+  add_foreign_key "ship_submissions", "projects"
   add_foreign_key "ship_submissions", "users", column: "reviewer_id"
   add_foreign_key "shop_item_prices", "shop_items"
-  add_foreign_key "tents", "users"
 end

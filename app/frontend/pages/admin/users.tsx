@@ -15,7 +15,7 @@ type AdminUser = {
 	camp_access: boolean;
 	actor_enabled: boolean;
 	rsvped_at: string | null;
-	tents_count: number;
+	projects_count: number;
 };
 export default function AdminUsers({
     users,query, flash_notice,
@@ -68,7 +68,7 @@ export default function AdminUsers({
 							<td className="px-4 py-3 font-mono text-sm text-foreground/67">{user.slack_id ?? "—"}</td>
 							<td className="px-4 py-3 text-sm text-foreground/67">{user.verification_status || "—"}</td>
 							<td className="px-4 py-3 font-serif text-sm text-foreground/67">{relativeTime(user.rsvped_at)}</td>
-							<td className="px-4 py-3 text-sm">{user.tents_count}</td>
+							<td className="px-4 py-3 text-sm">{user.projects_count}</td>
 							<td className="px-4 py-3">
 								<button type="button" onClick={() => toggleAdmin(user)}>
 									<Tag on={user.admin} onLabel="Admin" offLabel="User" />

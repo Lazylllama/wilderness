@@ -1,7 +1,7 @@
 import {AdminShell, AdminTable, Tag} from "@/components/admin/shell";
 import {Card, CardContent} from "@/components/wilderness/card";
-import {HEAT_TIERS, relativeTime} from "@/lib/camp-layout";
-import type {HeatTier} from "@/types/camp";
+import {PROJECT_TIERS, relativeTime} from "@/lib/camp-layout";
+import type {ProjectTier} from "@/types/camp";
 type HackatimeEntry = {name: string; hours: number | null};
 type AdminProject = {
     id: number;
@@ -9,7 +9,7 @@ type AdminProject = {
 	owner: string;
     owner_email: string;
 	hours: number;
-    heat_tier: HeatTier;
+    project_tier: ProjectTier;
 	status: string;
 	repo_url: string | null;
 	demo_url: string | null;
@@ -83,8 +83,8 @@ export default function AdminProjects({
                             {project.hours}h
                         </td>
                         <td className="px-4 py-3">
-							<span className="text-sm font-semibold" style={{color:HEAT_TIERS[project.heat_tier].flag}}>
-								{HEAT_TIERS[project.heat_tier].label}
+							<span className="text-sm font-semibold" style={{color:PROJECT_TIERS[project.project_tier].flag}}>
+								{PROJECT_TIERS[project.project_tier].label}
 							</span>
 						</td>
                         <td className="px-4 py-3 font-serif text-sm text-foreground/60 whitespace-nowrap">

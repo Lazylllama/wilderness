@@ -44,7 +44,7 @@ export default function RangerIndex({
 						<div className="flex flex-wrap gap-3">
 							<Button
 								type="button"
-								onClick={() => router.post("/tents/sync")}
+								onClick={() => router.post("/projects/sync")}
 							>
 								resync now
 							</Button>

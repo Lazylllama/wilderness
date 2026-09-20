@@ -4,17 +4,17 @@ import { CampHud } from "@/components/camp/camp-hud";
 import { Campfire } from "@/components/camp/campfire";
 import { EmptyPlot } from "@/components/camp/empty-plot";
 import { RangerPost, ShopCart } from "@/components/camp/landmarks";
+import { CampProject } from "@/components/camp/project";
+import { ProjectPanel } from "@/components/camp/project-panel";
 import { CampStage } from "@/components/camp/stage";
-import { CampTent } from "@/components/camp/tent";
-import { TentPanel } from "@/components/camp/tent-panel";
 import { FIRE_STATES, PLOT_COUNT } from "@/lib/camp-layout";
-import type { CampPageProps, Tent } from "@/types/camp";
+import type { CampPageProps, Project } from "@/types/camp";
 
-type Panel = { tent: Tent | null; plotIndex: number | null };
+type Panel = { project: Project | null; plotIndex: number | null };
 
 export default function CampIndex({
 	camp,
-	tents,
+	projects,
 	hackatime_projects,
 }: CampPageProps) {
 	const { user } = usePage<{ user: { name: string } }>().props;
@@ -23,13 +23,13 @@ export default function CampIndex({
 
 	// only the first free plot gets a dashed triangle, so the clearing stays calm
 	const nextPlot = useMemo(() => {
-		const taken = new Set(tents.map((tent) => tent.plot_index));
+		const taken = new Set(projects.map((project) => project.plot_index));
 		const limit = Math.min(camp.plot_count, PLOT_COUNT);
 		for (let index = 0; index < limit; index++) {
 			if (!taken.has(index)) return index;
 		}
 		return null;
-	}, [tents, camp.plot_count]);
+	}, [projects, camp.plot_count]);
 
 	return (
 		<main className="p-3 sm:p-5">
@@ -41,18 +41,18 @@ export default function CampIndex({
 					userName={user.name}
 				/>
 
-				{tents.map((tent) => (
-					<CampTent
-						key={tent.id}
-						tent={tent}
-						onOpen={(opened) => setPanel({ tent: opened, plotIndex: null })}
+				{projects.map((project) => (
+					<CampProject
+						key={project.id}
+						project={project}
+						onOpen={(opened) => setPanel({ project: opened, plotIndex: null })}
 					/>
 				))}
 
 				{nextPlot !== null && (
 					<EmptyPlot
 						plotIndex={nextPlot}
-						onPitch={(plotIndex) => setPanel({ tent: null, plotIndex })}
+						onPitch={(plotIndex) => setPanel({ project: null, plotIndex })}
 					/>
 				)}
 
@@ -61,8 +61,8 @@ export default function CampIndex({
 				<RangerPost />
 			</CampStage>
 
-			<TentPanel
-				tent={panel?.tent ?? null}
+			<ProjectPanel
+				project={panel?.project ?? null}
 				plotIndex={panel?.plotIndex ?? null}
 				projects={hackatime_projects}
 				open={panel !== null}

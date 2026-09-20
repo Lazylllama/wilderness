@@ -2,7 +2,7 @@ import {Tag} from "@/components/admin/shell";
 import {PROJECT_TIERS} from "@/lib/camp-layout";
 import type {ProjectTier} from "@/types/camp";
 
-export function HeatTierLabel({tier}: {tier: HeatTier}) {
+export function ProjectTierLabel({tier}: {tier: ProjectTier}) {
     return (
         <span className="text-sm font-semibold capitalize" style={{color: PROJECT_TIERS[tier].flag}}>
             {PROJECT_TIERS[tier].label}

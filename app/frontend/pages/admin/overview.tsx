@@ -10,7 +10,7 @@ export default function AdminOverview({
         rsvps: number;
         with_access: number;
         admins: number;
-        tents: number;
+        projects: number;
 		shipped: number;
 		hours: number;
     };
@@ -32,7 +32,7 @@ export default function AdminOverview({
                     <Stat icon={Users} label="rsvps" value={stats.rsvps}/>
                     <Stat icon={Flame} label="users with access" value={stats.with_access}/>
 					<Stat icon={Shield} label="users" value={stats.admins}/>
-					<Stat icon={Tent} label="projects" value={stats.tents}/>
+					<Stat icon={Tent} label="projects" value={stats.projects}/>
                     <Stat icon={Tent} label="shipped" value={stats.shipped}/>
                     <Stat icon={Flame} label="hours logged" value={stats.hours}/>
                 </div>

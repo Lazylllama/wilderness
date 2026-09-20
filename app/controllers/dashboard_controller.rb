@@ -5,33 +5,33 @@ class DashboardController < InertiaController
   def index
     render inertia: "camp/index", props: {
       camp: {
-        total_hours: tents.sum(&:hours).round(1),
+        total_hours: projects.sum(&:hours).round(1),
         fire_state: current_user.fire_state,
         streak: current_user.streak,
         logs_balance: current_user.logs_balance,
         plot_count: 8
       },
-      tents: tents.map { |tent| tent_props(tent) },
-      hackatime_projects: hackatime_projects(tents)
+      projects: projects.map { |project| project_props(project) },
+      hackatime_projects: hackatime_projects(projects)
     }
   end
 
   private
 
-  def tents
-    @tents ||= current_user.tents.order(:plot_index).to_a
+  def projects
+    @projects ||= current_user.projects.order(:plot_index).to_a
   end
 
-  def tent_props(tent)
-    tent.as_json(only: %i[id name description repo_url demo_url hackatime_projects status plot_index last_heartbeat_at hackatime_synced_at shipped_at])
-      .merge("hours" => tent.hours.round(1), "logs" => tent.logs_pending, "heat_tier" => tent.heat_tier)
+  def project_props(project)
+    project.as_json(only: %i[id name description repo_url demo_url hackatime_projects status plot_index last_heartbeat_at hackatime_synced_at shipped_at])
+      .merge("hours" => project.hours.round(1), "logs" => project.logs_pending, "project_tier" => project.project_tier)
   end
 
-  def hackatime_projects(tents)
-    owner = tents.flat_map { |tent| tent.hackatime_projects.map { |name| [ name, tent.name ] } }.to_h
+  def hackatime_projects(projects)
+    owner = projects.flat_map { |project| project.hackatime_projects.map { |name| [ name, project.name ] } }.to_h
 
-    (current_user.hackatime_snapshot || []).map do |project|
-      project.slice("name", "total_seconds").merge("claimed_by" => owner[project["name"]])
+    (current_user.hackatime_snapshot || []).map do |entry|
+      entry.slice("name", "total_seconds").merge("claimed_by" => owner[entry["name"]])
     end
   end
 end

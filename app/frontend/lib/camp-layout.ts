@@ -1,4 +1,4 @@
-import type { FireState, HeatTier } from "@/types/camp";
+import type { FireState, ProjectTier } from "@/types/camp";
 
 export const PLOTS = [
 	{ x: 29, y: 46 },
@@ -36,8 +36,8 @@ export function jitter(seed: number, amount = 1.4) {
 	return (x - Math.floor(x) - 0.5) * 2 * amount;
 }
 
-export const HEAT_TIERS: Record<
-	HeatTier,
+export const PROJECT_TIERS: Record<
+	ProjectTier,
 	{ label: string; rate: number; flag: string; text: string; at: number }
 > = {
 	kindling: {
@@ -70,23 +70,23 @@ export const HEAT_TIERS: Record<
 	},
 };
 
-export const TIER_ORDER: HeatTier[] = [
+export const TIER_ORDER: ProjectTier[] = [
 	"kindling",
 	"campfire",
 	"bonfire",
 	"wildfire",
 ];
 
-export function tierForHours(hours: number): HeatTier {
-	let tier: HeatTier = "kindling";
+export function tierForHours(hours: number): ProjectTier {
+	let tier: ProjectTier = "kindling";
 	for (const candidate of TIER_ORDER) {
-		if (hours >= HEAT_TIERS[candidate].at) tier = candidate;
+		if (hours >= PROJECT_TIERS[candidate].at) tier = candidate;
 	}
 	return tier;
 }
 
-export function logsFor(hours: number, tier: HeatTier) {
-	return Math.round(hours * HEAT_TIERS[tier].rate);
+export function logsFor(hours: number, tier: ProjectTier) {
+	return Math.round(hours * PROJECT_TIERS[tier].rate);
 }
 
 export const FIRE_STATES: Record<

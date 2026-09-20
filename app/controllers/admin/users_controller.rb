@@ -19,7 +19,7 @@ module Admin
           streak: user.streak,
           fire_state: user.fire_state
       ),
-      tents: user.tents.order(:plot_index).map {|tent| tent_props(tent)},
+      projects: user.projects.order(:plot_index).map {|project| project_props(project)},
       transactions: user.log_transactions.recent.limit(50).map {|entry| entry_props(entry)},
       flash_notice: flash_notice
     }
@@ -56,8 +56,8 @@ module Admin
       )
     end
 
-    def tent_counts
-      @tent_counts ||= Tent.group(:user_id).count
+    def project_counts
+      @project_counts ||= Project.group(:user_id).count
     end
 
     def user_props(user)
@@ -71,20 +71,20 @@ module Admin
         camp_access: access?(user),
         actor_enabled: camp_actors.include?(user.flipper_id),
         rsvped_at: user.rsvped_at,
-        tents_count: tent_counts.fetch(user.id, 0)
+        projects_count: project_counts.fetch(user.id, 0)
       }
     end
   end
 
-  def tent_props(tent)
+  def project_props(project)
     {
-      id: tent.id,
-      name: tent.name,
-      status: tent.status,
-      hours: tent.hours.round(1),
-      heat_tier: tent.heat_tier,
-      repo_url: tent.repo_url,
-      demo_url: tent.demo_url
+      id: project.id,
+      name: project.name,
+      status: project.status,
+      hours: project.hours.round(1),
+      project_tier: project.project_tier,
+      repo_url: project.repo_url,
+      demo_url: project.demo_url
     }
   end
 
