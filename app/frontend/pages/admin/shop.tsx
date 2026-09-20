@@ -175,17 +175,8 @@ export default function AdminShop({
 
 				<AdminTable
 					headers={["item", "kind", "prices", "stock", "slot", "shelf", ""]}
+					empty="the shelf is bare. stock something."
 				>
-					{items.length === 0 && (
-						<tr>
-							<td
-								colSpan={7}
-								className="px-4 py-8 text-center font-serif italic text-foreground/50"
-							>
-								the shelf is bare. stock something.
-							</td>
-						</tr>
-					)}
 					{items.map((item) => (
 						<tr
 							key={item.id}

@@ -34,14 +34,8 @@ export default function AdminProjects({
             </div>
             <AdminTable
 				headers={["project", "owner", "hackatime projects","hours", "tier", "status", "last heartbeat", "links"]}
+				empty="no projects yet aw..."
 			>
-                {projects.length === 0 && (
-                    <tr>
-                        <td colSpan={7} className="px-4 py-8 text-center font-serif italic text-foreground/50">
-                            no projects yet aw...
-                        </td>
-                    </tr>
-                )}
                 {projects.map((project) => (
                     <tr key={project.id} className="border-tborder-border hover:bg-background/40 transition-colors align-top">
                         <td className="px-4 py-3 font-semibold">{project.name}</td>
@@ -87,11 +81,11 @@ export default function AdminProjects({
 								{PROJECT_TIERS[project.project_tier].label}
 							</span>
 						</td>
-                        <td className="px-4 py-3 font-serif text-sm text-foreground/60 whitespace-nowrap">
-                            {relativeTime(project.synced_at)}
-                        </td>
                         <td className="px-4 py-3">
                             <Tag on={project.status === "shipped" || project.status === "approved"} onLabel={project.status} offLabel={project.status}/>
+                        </td>
+                        <td className="px-4 py-3 font-serif text-sm text-foreground/60 whitespace-nowrap">
+                            {relativeTime(project.synced_at)}
                         </td>
                         <td className="px-4 py-3 flex gap-3 text-sm">
                             {project.repo_url && (
