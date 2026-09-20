@@ -23,6 +23,7 @@ module Admin
       transactions: user.log_transactions.recent.limit(50).map {|entry| entry_props(entry)},
       flash_notice: flash_notice
     }
+  end
 
     def update
       user = User.find(params[:id])
@@ -73,7 +74,6 @@ module Admin
         rsvped_at: user.rsvped_at,
         projects_count: project_counts.fetch(user.id, 0)
       }
-    end
   end
 
   def project_props(project)
