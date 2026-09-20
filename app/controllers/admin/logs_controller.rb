@@ -1,7 +1,7 @@
 module Admin
   class LogsController < BaseController
     def index
-        render inertia "admin/logs", props: {
+        render inertia: "admin/logs", props: {
             transactions: scoped_transactions.map {|entry| entry_props(entry)},
             totals: {
                 circulating: LogTransaction.sum(:amount),
