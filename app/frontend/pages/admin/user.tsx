@@ -1,23 +1,26 @@
-import {Link, router, useForm} from "@inertiajs/react";
+import {router, useForm} from "@inertiajs/react";
 import {ArrowLeft} from "lucide-react";
-import {AdminShell, AdminTable, StatCard, Tag} from "@/components/admin/shell";
 import {LOG_SOURCE_LABELS, LogAmount, type LogEntry} from "@/components/admin/logs";
 import {ProjectLinks, ProjectStatus, ProjectTierLabel} from "@/components/admin/projects";
+import {AdminShell, AdminTable, StatCard, Tag} from "@/components/admin/shell";
 import {Button} from "@/components/wilderness/button";
 import {Card, CardContent} from "@/components/wilderness/card";
 import {Input} from "@/components/wilderness/input";
 import {Label} from "@/components/wilderness/label";
 import {formatLogs, relativeTime} from "@/lib/camp-layout";
 import type {ProjectTier} from "@/types/camp";
-type User = {
+
+type Camper = {
 	id: number;
 	name: string;
 	email: string;
 	slack_id: string | null;
 	verification_status: string | null;
 	admin: boolean;
+	camp_access: boolean;
 	actor_enabled: boolean;
 	rsvped_at: string | null;
+	projects_count: number;
 	balance: number;
 	region: string | null;
 	hackatime_connected: boolean;
@@ -25,7 +28,8 @@ type User = {
 	streak: number;
 	fire_state: string;
 };
-type UserProject = {
+
+type CamperProject = {
 	id: number;
 	name: string;
 	status: string;
@@ -35,28 +39,24 @@ type UserProject = {
 	demo_url: string | null;
 };
 
-const SOURCE_LABELS: Record<string, string> = {
-	adjustment: "by hand",
-	shop_purchase: "spent in the shop",
-	ship_submission: "earned by shipping a project",
-};
 export default function AdminUser({
-    camper,
+	camper,
 	projects,
 	transactions,
 	flash_notice,
-}:{
-    camper: Camper;
+}: {
+	camper: Camper;
 	projects: CamperProject[];
-	transactions: Entry[];
+	transactions: LogEntry[];
 	flash_notice: string | null;
 }) {
-    const [amount, setAmount] = useState("");
-	const [memo, setMemo] = useState("");
+	const form = useForm({amount: "", memo: ""});
+	const formError = form.errors.amount ?? form.errors.memo;
 
-    function toggleField(field: "admin" | "camp_access") {
+	function toggleField(field: "admin" | "camp_access") {
 		router.patch(`/admin/users/${camper.id}`, {field}, {preserveScroll: true});
 	}
+
 	function adjustLogs(event: React.FormEvent) {
 		event.preventDefault();
 		form.post(`/admin/users/${camper.id}/logs`, {
@@ -65,56 +65,44 @@ export default function AdminUser({
 		});
 	}
 
-    function grant(event: React.FormEvent) {
-        event.preventDefault();
-		router.post(
-            `/admin/users/${camper.id}/logs`,
-            {amount, memo},
-			{
-				preserveScroll: true,
-				onSuccess: () => {
-					setAmount("");
-					setMemo("");
-				},
-			},
-        );
-    }
+	return (
+		<AdminShell title={camper.name} subtitle={camper.email} flashNotice={flash_notice}>
+			<div className="flex flex-col gap-4">
+				<button type="button" onClick={() => router.visit("/admin/users")} className="flex w-fit cursor-pointer items-center gap-2 font-serif text-lg italic text-foreground/60 transition-colors hover:text-foreground">
+					<ArrowLeft size={20} strokeWidth={3}/>all users
+				</button>
 
-    return (
-        <AdminShell title={camper.name} subtitle={camper.email} flashNotice={flash_notice}>
-            	<div className="flex flex-col gap-4">
-                    <button type="button" onClick={() => router.visit("/admin/users")} className="flex w-fit cursor-pointer items-center gap-2 font-serif text-lg italic text-foreground/60 transition-colors hover:text-foreground">
-                        <ArrowLeft size={20} strokeWidth={3}/>all users
-                    </button>
-
-                    <div className="grid grid-cols-4 gap-4">
-					<Stat label="Logs" value={`🪵 ${formatLogs(camper.balance)}`}/>
-					<Stat label="Projects" value={String(camper.projects_count)}/>
-					<Stat label="Streak" value={`${camper.streak}d`}/>
-					<Stat label="Fire" value={camper.fire_state}/>
+				<div className="grid grid-cols-4 gap-4">
+					<StatCard label="Logs" value={`🪵 ${formatLogs(camper.balance)}`}/>
+					<StatCard label="Projects" value={String(camper.projects_count)}/>
+					<StatCard label="Streak" value={`${camper.streak}d`}/>
+					<StatCard label="Fire" value={camper.fire_state}/>
 				</div>
 
-                <div className="grid grid-cols-2 gap-4">
-                    <Card>
-                        <CardContent className="flex flex-col gap-3 p-5">
-                            <span className="text-lg font-bold">Account details</span>
-							<Detail label="slack" value={camper.slack_id?? "—"} mono/>
+				<div className="grid grid-cols-2 gap-4">
+					<Card>
+						<CardContent className="flex flex-col gap-3 p-5">
+							<span className="text-lg font-bold">Account details</span>
+							<Detail label="slack" value={camper.slack_id ?? "—"} mono/>
 							<Detail label="verified" value={camper.verification_status || "—"}/>
-							<Detail label="region" value={camper.region?? "not set"}/>
+							<Detail label="region" value={camper.region ?? "not set"}/>
 							<Detail label="rsvped" value={relativeTime(camper.rsvped_at)}/>
-                            <Detail label="hackatime" value={
-								camper.hackatime_connected? `synced ${relativeTime(camper.hackatime_synced_at)}`:"not connected"
+							<Detail label="hackatime" value={
+								camper.hackatime_connected ? `synced ${relativeTime(camper.hackatime_synced_at)}` : "not connected"
 							}/>
 
-                            <div className="flex flex-row gap-3 pt-2">
-                                <button type="button" onClick={() => toggleField("admin")}>
+							<div className="flex flex-row gap-3 pt-2">
+								<button type="button" onClick={() => toggleField("admin")}>
 									<Tag on={camper.admin} onLabel="admin" offLabel="not a admin" />
 								</button>
-                            </div>
+								<button type="button" onClick={() => toggleField("camp_access")}>
+									<Tag on={camper.camp_access} onLabel="camp access" offLabel="no camp access" />
+								</button>
+							</div>
+						</CardContent>
+					</Card>
+				</div>
 
-                        </CardContent>
-                    </Card>
-                </div>
 				<Card>
 					<CardContent className="p-5">
 						<form onSubmit={adjustLogs} className="flex flex-col gap-4">
@@ -179,41 +167,16 @@ export default function AdminUser({
 						))}
 					</AdminTable>
 				</section>
-                </div>
-        </AdminShell>
-    );
-}
-
-function Detail({label, children}: {label: string; children: React.ReactNode}) {
-	return (
-		<div className="flex flex-row justify-between gap-4 text-sm">
-			<span className="text-foreground/50">{label}</span>
-			<span className="text-right font-semibold">{children}</span>
-		</div>
+			</div>
+		</AdminShell>
 	);
 }
 
-function AccessToggle({
-	label,description,on,onToggle,
-}: {
-	label: string;
-	description: string;
-	on: boolean;
-	onToggle: () => void;
-}) {
+function Detail({label, value, mono}: {label: string; value: React.ReactNode; mono?: boolean}) {
 	return (
-		<div className="flex flex-row items-center justify-between gap-4">
-			<div className="flex flex-col">
-				<span className="font-semibold">{label}</span>
-				<span className="font-serif text-sm text-foreground/50">{description}</span>
-			</div>
-
-			<div className="flex flex-row items-center gap-3">
-				<Tag on={on} onLabel="Enabled" offLabel="Disabled"/>
-				<Button variant="outline" className="px-3 py-1.5 text-sm" onClick={onToggle}>
-					{on? "Revoke": "Grant"}
-				</Button>
-			</div>
+		<div className="flex flex-row justify-between gap-4 text-sm">
+			<span className="text-foreground/50">{label}</span>
+			<span className={mono ? "text-right font-mono font-semibold" : "text-right font-semibold"}>{value}</span>
 		</div>
 	);
 }
